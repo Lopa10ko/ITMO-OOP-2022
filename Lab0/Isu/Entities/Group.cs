@@ -4,13 +4,13 @@ namespace Isu.Entities;
 
 public class Group
 {
-    private static readonly int GroupMaxQuantity = 25;
+    private static int groupMaxQuantity = 25;
     private GroupName _groupName;
     private List<Student> _students = new List<Student>();
 
-    public Group(string group)
+    public Group(GroupName groupName)
     {
-        this._groupName = new GroupName(group);
+        this._groupName = groupName;
     }
 
     public GroupName GroupName
@@ -25,8 +25,10 @@ public class Group
 
     public void AddStudent(Student student)
     {
-        if (this._students.Count >= GroupMaxQuantity)
+        if (this._students.Count >= groupMaxQuantity)
             throw new Exception();
         this._students.Add(student);
+
+        // student.ChangeGroup(this.GroupName)
     }
 }

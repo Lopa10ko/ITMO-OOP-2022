@@ -1,3 +1,5 @@
+using Isu.Tools;
+
 namespace Isu.Models;
 
 public class CourseNumber
@@ -5,9 +7,16 @@ public class CourseNumber
     private int _courseNumber;
 
     public CourseNumber(int courseNumber)
+        => this.CourseNum = courseNumber;
+
+    public int CourseNum
     {
-        if (!(courseNumber >= 1 && courseNumber <= 4))
-            throw new OverflowException();
-        this._courseNumber = courseNumber;
+        get => this._courseNumber;
+        private set
+        {
+            if (!(value >= 1 && value <= 4))
+                throw new CourseNumberOutOfRangeException();
+            this._courseNumber = value;
+        }
     }
 }

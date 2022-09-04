@@ -11,18 +11,18 @@ public class Student
     private ulong _idIsu;
 
     public Student()
-        : this("Undefined", new Group("Z0000"))
+        : this("Undefined", "Z0000")
     { }
 
     public Student(string name, string group)
     {
         this._idIsu = ++_idCurrent;
         this._name = name;
-        this._group = group;
+        this._group = new Group(group);
     }
 
     public void Print()
     {
-        Console.WriteLine($"name: {_name}  ISU: {_idIsu} Group: {_groupName}");
+        Console.WriteLine($"name: {_name}  ISU: {_idIsu} Group: {_group.GroupName}");
     }
 }
