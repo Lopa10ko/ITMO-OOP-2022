@@ -1,49 +1,48 @@
-using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 using Isu.Tools;
 
 namespace Isu.Models;
 
-public class GroupName
+public class GroupName : IEquatable<GroupName>
 {
-    private static string pattern = @"^[A-Z][^089][1-4][\d\D]{2,3}$";
-    private string? _groupName;
+    private const int FacultyLetterPosition = 0;
+    private const int CourseNumberPosition = 2;
+    /*[Required]
+    [StringLength(7, MinimumLength = 5)]*/
+    private readonly string _groupName;
 
     public GroupName(string groupName)
     {
-        if (!IsEmptyString(groupName))
-            Name = groupName;
-        CourseNumber = new CourseNumber(GetCourseNumber(groupName));
+        if (groupName.Length is < 5 or > 7)
+        {
+            throw new GroupNameLengthOutOfRangeException();
+        }
+
+        _groupName = groupName;
+        FacultyLetter = groupName[FacultyLetterPosition];
     }
 
-    public CourseNumber CourseNumber { get; }
+    public char FacultyLetter { get; }
+    public int GetCourseNumber()
+        => Convert.ToInt32(_groupName[CourseNumberPosition]);
 
-    public string Name
+    public bool Equals(GroupName? other)
     {
-        get => this._groupName;
-        set
-        {
-            if (!Regex.IsMatch(value, pattern))
-                throw new Exception();
-            this._groupName = value;
-        }
+        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return _groupName == other._groupName && FacultyLetter == other.FacultyLetter;
     }
 
-    public static bool IsEmptyString(string str)
-        => string.IsNullOrEmpty(str);
-
-    private static int GetCourseNumber(string groupName)
+    public override bool Equals(object? obj)
     {
-        int courseNumber;
-        try
-        {
-            courseNumber = int.Parse(groupName.Trim().Substring(2, 3));
-        }
-        catch (FormatException e)
-        {
-            Console.WriteLine(e.Message);
-            throw new CourseNumberNotParsableException();
-        }
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((GroupName)obj);
+    }
 
-        return courseNumber;
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(_groupName, FacultyLetter);
     }
 }

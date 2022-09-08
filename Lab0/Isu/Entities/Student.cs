@@ -3,26 +3,35 @@ using Isu.Services;
 
 namespace Isu.Entities;
 
-public class Student
+public class Student : IEquatable<Student>
 {
-    private static ulong _idCurrent = 0;
-    private Group _group;
-    private string _name;
-    private ulong _idIsu;
-
-    public Student()
-        : this("Undefined", "Z0000")
-    { }
-
-    public Student(string name, string group)
+    public Student(int isuNumber, string name)
     {
-        this._idIsu = ++_idCurrent;
-        this._name = name;
-        this._group = new Group(group);
+        Name = name;
+        IsuNumber = isuNumber;
     }
 
-    public void Print()
+    public string Name { get; }
+    public Group? Group { get; }
+    public int IsuNumber { get; }
+
+    public bool Equals(Student? other)
     {
-        Console.WriteLine($"name: {_name}  ISU: {_idIsu} Group: {_group.GroupName}");
+        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return IsuNumber == other.IsuNumber;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((Student)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return IsuNumber;
     }
 }

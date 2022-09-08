@@ -2,21 +2,37 @@ using Isu.Tools;
 
 namespace Isu.Models;
 
-public class CourseNumber
+public class CourseNumber : IEquatable<CourseNumber>
 {
-    private int _courseNumber;
+    private readonly int _courseNumber;
 
     public CourseNumber(int courseNumber)
-        => this.CourseNum = courseNumber;
-
-    public int CourseNum
     {
-        get => this._courseNumber;
-        private set
+        if (courseNumber is < 1 or > 4)
         {
-            if (!(value >= 1 && value <= 4))
-                throw new CourseNumberOutOfRangeException();
-            this._courseNumber = value;
+            throw new CourseNumberOutOfRangeException();
         }
+
+        _courseNumber = courseNumber;
+    }
+
+    public bool Equals(CourseNumber? other)
+    {
+        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return _courseNumber == other._courseNumber;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((CourseNumber)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return _courseNumber;
     }
 }
