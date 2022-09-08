@@ -12,7 +12,7 @@ public class Student : IEquatable<Student>
     }
 
     public string Name { get; }
-    public Group? Group { get; }
+    public Group? Group { get; set; }
     public int IsuNumber { get; }
 
     public bool Equals(Student? other)

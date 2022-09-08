@@ -4,15 +4,12 @@ namespace Isu.Models;
 
 public class CourseNumber : IEquatable<CourseNumber>
 {
+    private const int MinNumber = 1;
+    private const int MaxNumber = 4;
     private readonly int _courseNumber;
 
     public CourseNumber(int courseNumber)
     {
-        if (courseNumber is < 1 or > 4)
-        {
-            throw new CourseNumberOutOfRangeException();
-        }
-
         _courseNumber = courseNumber;
     }
 

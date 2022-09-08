@@ -1,27 +1,46 @@
 ﻿using Isu.Entities;
 using Isu.Models;
+using Isu.Tools;
 
 namespace Isu.Services;
 
 public class IsuService : IIsuService
 {
-    private List<Group> _groups = new List<Group>();
-    private List<Student> _students = new List<Student>();
+    private readonly List<Group> _groups;
+    private readonly List<Student> _students;
+    private int _idISU;
+
+    public IsuService()
+    {
+        _groups = new List<Group>();
+        _students = new List<Student>();
+        _idISU = 1;
+    }
 
     public Group AddGroup(GroupName name)
     {
         var group = new Group(name);
+        if (_groups.Contains(group))
+        {
+            throw new GroupException("Group is already created");
+        }
+
         _groups.Add(group);
         return group;
     }
 
     public Student AddStudent(Group group, string name)
     {
-        /*try group.Addstudent(name)
-         why not [Student AddStudent(Group group, Student student)]
-         or [Student AddStudent(string group, string student)]*/
-        /*try add new student, if student exists -> add student to group*/
-        throw new NotImplementedException();
+        if (!_groups.Contains(group))
+        {
+            throw new GroupException("Group is not initialized");
+        }
+
+        var student = new Student(_idISU, name);
+        _idISU++;
+        group.AddStudent(student);
+        _students.Add(student);
+        return student;
     }
 
     public Student GetStudent(int id)
@@ -35,24 +54,18 @@ public class IsuService : IIsuService
     }
 
     public List<Student> FindStudents(GroupName groupName)
-    {
-        throw new NotImplementedException();
-    }
+        => _groups.Where(group => group.GroupName.Equals(groupName)).ToList()
+            .SelectMany(group => group.GetStudents()).ToList();
 
     public List<Student> FindStudents(CourseNumber courseNumber)
-    {
-        throw new NotImplementedException();
-    }
+        => _groups.Where(group => group.CourseNumber.Equals(courseNumber)).ToList()
+            .SelectMany(group => group.GetStudents()).ToList();
 
     public Group? FindGroup(GroupName groupName)
-    {
-        throw new NotImplementedException();
-    }
+        => _groups.FirstOrDefault(group => group.GroupName.Equals(groupName));
 
     public List<Group> FindGroups(CourseNumber courseNumber)
-    {
-        throw new NotImplementedException();
-    }
+        => _groups.Where(group => group.CourseNumber.Equals(courseNumber)).ToList();
 
     public void ChangeStudentGroup(Student student, Group newGroup)
     {
