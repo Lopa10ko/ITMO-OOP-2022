@@ -50,11 +50,11 @@ public class IsuService : IIsuService
         => _students.SingleOrDefault(student => student.IsuNumber == id);
 
     public List<Student> FindStudents(GroupName groupName)
-        => _groups.Where(group => group.GroupName.Equals(groupName)).ToList()
+        => _groups.Where(group => group.GroupName.Equals(groupName))
             .SelectMany(group => group.GetStudents()).ToList();
 
     public List<Student> FindStudents(CourseNumber courseNumber)
-        => _groups.Where(group => group.CourseNumber.Equals(courseNumber)).ToList()
+        => _groups.Where(group => group.CourseNumber.Equals(courseNumber))
             .SelectMany(group => group.GetStudents()).ToList();
 
     public Group? FindGroup(GroupName groupName)

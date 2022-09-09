@@ -50,12 +50,12 @@ public class GroupName : IEquatable<GroupName>
     {
         if (groupName.Length is < MinimumLength or > MaximumLength)
         {
-            throw new GroupNameException("GroupName length is out of range\n");
+            throw new GroupNameException("GroupName length is out of range");
         }
 
         if (!char.IsUpper(groupName[(int)GroupNamePosition.FacultyLetterPosition]))
         {
-            throw new GroupNameException("First letter in GroupName must be in [A-Z]\n");
+            throw new GroupNameException("First letter in GroupName must be in [A-Z]");
         }
 
         char courseNumberSymbol = groupName[(int)GroupNamePosition.CourseNumberPosition];
