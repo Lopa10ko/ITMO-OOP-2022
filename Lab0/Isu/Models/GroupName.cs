@@ -53,20 +53,20 @@ public class GroupName : IEquatable<GroupName>
             throw new GroupNameException("GroupName length is out of range\n");
         }
 
-        if (char.IsUpper(groupName[(int)GroupNamePosition.FacultyLetterPosition]))
+        if (!char.IsUpper(groupName[(int)GroupNamePosition.FacultyLetterPosition]))
         {
             throw new GroupNameException("First letter in GroupName must be in [A-Z]\n");
         }
 
         char courseNumberSymbol = groupName[(int)GroupNamePosition.CourseNumberPosition];
-        if (char.IsDigit(courseNumberSymbol) && Convert.ToInt32(courseNumberSymbol) is < MinCourseNumber
+        if (!char.IsDigit(courseNumberSymbol) || int.Parse(courseNumberSymbol.ToString()) is < MinCourseNumber
             or > MaxCourseNumber)
         {
             throw new GroupNameException("CourseNumber is not valid: out of range");
         }
 
         char studyTypeSymbol = groupName[(int)GroupNamePosition.StudyTypePosition];
-        if (char.IsDigit(studyTypeSymbol) && Convert.ToInt32(studyTypeSymbol) is < MinStudyType
+        if (!char.IsDigit(studyTypeSymbol) || int.Parse(studyTypeSymbol.ToString()) is < MinStudyType
             or > MaxStudyType)
         {
             throw new GroupNameException("StudyType is not valid: out of range");
