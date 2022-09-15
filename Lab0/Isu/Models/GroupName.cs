@@ -5,6 +5,10 @@ namespace Isu.Models;
 
 public class GroupName : IEquatable<GroupName>
 {
+    private const int FacultyLetterPosition = 0;
+    private const int StudyTypePosition = 1;
+    private const int CourseNumberPosition = 2;
+    private const int GroupNumberPositionStart = 3;
     private const int MinCourseNumber = 1;
     private const int MaxCourseNumber = 4;
     private const int MinimumLength = 5;
@@ -18,7 +22,7 @@ public class GroupName : IEquatable<GroupName>
     {
         ValidateGroupName(groupName);
         _groupName = groupName;
-        FacultyLetter = groupName[(int)GroupNamePosition.FacultyLetterPosition];
+        FacultyLetter = groupName[FacultyLetterPosition];
     }
 
     public char FacultyLetter { get; }
@@ -48,27 +52,27 @@ public class GroupName : IEquatable<GroupName>
             throw new GroupNameException("GroupName length is out of range");
         }
 
-        if (!char.IsUpper(groupName[(int)GroupNamePosition.FacultyLetterPosition]))
+        if (!char.IsUpper(groupName[FacultyLetterPosition]))
         {
             throw new GroupNameException("First letter in GroupName must be in [A-Z]");
         }
 
-        char courseNumberSymbol = groupName[(int)GroupNamePosition.CourseNumberPosition];
+        char courseNumberSymbol = groupName[CourseNumberPosition];
         if (!char.IsDigit(courseNumberSymbol) || int.Parse(courseNumberSymbol.ToString()) is < MinCourseNumber
-            or > MaxCourseNumber)
+                or > MaxCourseNumber)
         {
             throw new GroupNameException("CourseNumber is not valid: out of range");
         }
 
-        char studyTypeSymbol = groupName[(int)GroupNamePosition.StudyTypePosition];
+        char studyTypeSymbol = groupName[StudyTypePosition];
         if (!char.IsDigit(studyTypeSymbol) || int.Parse(studyTypeSymbol.ToString()) is < MinStudyType
-            or > MaxStudyType)
+                or > MaxStudyType)
         {
             throw new GroupNameException("StudyType is not valid: out of range");
         }
 
         string groupNumberSymbols =
-            groupName.Substring((int)GroupNamePosition.GroupNumberPositionStart, GroupNumberLength);
+            groupName.Substring(GroupNumberPositionStart, GroupNumberLength);
         bool isGroupNumberNumeric = int.TryParse(groupNumberSymbols, out _);
         if (!isGroupNumberNumeric)
         {
