@@ -18,8 +18,7 @@ public class Group : IEquatable<Group>
     public GroupName GroupName { get; }
     public CourseNumber CourseNumber { get; }
 
-    public IReadOnlyList<Student> GetStudents()
-        => _students;
+    public IReadOnlyList<Student> GetStudents => _students;
 
     public bool Equals(Group? other)
     {
