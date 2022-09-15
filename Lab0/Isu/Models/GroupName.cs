@@ -27,7 +27,7 @@ public class GroupName : IEquatable<GroupName>
     public char FacultyLetter { get; }
 
     public CourseNumber GetCourseNumber()
-        => new CourseNumber(Convert.ToInt32(_groupName[CourseNumberPosition]));
+        => new CourseNumber(int.Parse(_groupName[CourseNumberPosition].ToString()));
 
     public bool Equals(GroupName? other)
     {
@@ -56,13 +56,6 @@ public class GroupName : IEquatable<GroupName>
             throw new GroupNameException("First letter in GroupName must be in [A-Z]");
         }
 
-        char courseNumberSymbol = groupName[CourseNumberPosition];
-        if (!char.IsDigit(courseNumberSymbol) || int.Parse(courseNumberSymbol.ToString()) is < MinCourseNumber
-                or > MaxCourseNumber)
-        {
-            throw new GroupNameException("CourseNumber is not valid: out of range");
-        }
-
         char studyTypeSymbol = groupName[StudyTypePosition];
         if (!char.IsDigit(studyTypeSymbol) || int.Parse(studyTypeSymbol.ToString()) is < MinStudyType
                 or > MaxStudyType)
@@ -70,8 +63,7 @@ public class GroupName : IEquatable<GroupName>
             throw new GroupNameException("StudyType is not valid: out of range");
         }
 
-        string groupNumberSymbols =
-            groupName.Substring(GroupNumberPositionStart, GroupNumberLength);
+        string groupNumberSymbols = groupName.Substring(GroupNumberPositionStart, GroupNumberLength);
         bool isGroupNumberNumeric = int.TryParse(groupNumberSymbols, out _);
         if (!isGroupNumberNumeric)
         {
