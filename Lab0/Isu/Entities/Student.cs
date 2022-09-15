@@ -27,4 +27,14 @@ public class Student : IEquatable<Student>
 
     public override int GetHashCode()
         => IsuNumber;
+
+    internal void AddGroup(Group group)
+    {
+        if (group.Equals(Group))
+        {
+            throw new GroupException($"Student {Name} - {IsuNumber} has group already");
+        }
+
+        Group = group;
+    }
 }
