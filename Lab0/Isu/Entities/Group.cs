@@ -12,7 +12,7 @@ public class Group : IEquatable<Group>
     {
         _students = new List<Student>();
         GroupName = groupName;
-        CourseNumber = groupName.GetCourseNumber();
+        CourseNumber = groupName.CourseNumber;
     }
 
     public GroupName GroupName { get; }
