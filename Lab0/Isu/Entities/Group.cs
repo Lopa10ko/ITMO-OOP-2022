@@ -7,6 +7,7 @@ public class Group : IEquatable<Group>
 {
     private const int GroupCapacity = 25;
     private List<Student> _students;
+
     public Group(GroupName groupName)
     {
         _students = new List<Student>();
@@ -57,5 +58,12 @@ public class Group : IEquatable<Group>
     }
 
     internal void RemoveStudent(Student student)
-        => _students.Remove(student);
+    {
+        if (!_students.Contains(student))
+        {
+            throw new GroupException($"Student {student.Name} - {student.IsuNumber} is not in this group to delete");
+        }
+
+        _students.Remove(student);
+    }
 }
