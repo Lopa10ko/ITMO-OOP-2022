@@ -73,7 +73,7 @@ public class IsuService : IIsuService
     {
         if (student.Group == null)
         {
-            throw new GroupException("Student must have oldGroup to change groups");
+            throw new GroupException($"{student.Name} - {student.IsuNumber} must have oldGroup to change groups");
         }
 
         student.Group.RemoveStudent(student);

@@ -7,14 +7,10 @@ public class GroupName : IEquatable<GroupName>
     private const int FacultyLetterPosition = 0;
     private const int StudyTypePosition = 1;
     private const int CourseNumberPosition = 2;
+    private const int GroupNumberLength = 2;
     private const int GroupNumberPositionStart = 3;
-    private const int MinCourseNumber = 1;
-    private const int MaxCourseNumber = 4;
     private const int MinimumLength = 5;
     private const int MaximumLength = 7;
-    private const int MinStudyType = 2;
-    private const int MaxStudyType = 5;
-    private const int GroupNumberLength = 2;
     private readonly string _groupName;
 
     public GroupName(string groupName)
@@ -22,12 +18,13 @@ public class GroupName : IEquatable<GroupName>
         ValidateGroupName(groupName);
         _groupName = groupName;
         FacultyLetter = groupName[FacultyLetterPosition];
+        StudyTypeNumber = new StudyTypeNumber(int.Parse(_groupName[StudyTypePosition].ToString()));
+        CourseNumber = new CourseNumber(int.Parse(_groupName[CourseNumberPosition].ToString()));
     }
 
     public char FacultyLetter { get; }
-
-    public CourseNumber GetCourseNumber()
-        => new CourseNumber(int.Parse(_groupName[CourseNumberPosition].ToString()));
+    public StudyTypeNumber StudyTypeNumber { get; }
+    public CourseNumber CourseNumber { get; }
 
     public bool Equals(GroupName? other)
     {
@@ -56,18 +53,23 @@ public class GroupName : IEquatable<GroupName>
             throw new GroupNameException("First letter in GroupName must be in [A-Z]");
         }
 
-        char studyTypeSymbol = groupName[StudyTypePosition];
-        if (!char.IsDigit(studyTypeSymbol) || int.Parse(studyTypeSymbol.ToString()) is < MinStudyType
-                or > MaxStudyType)
+        char courseNumberSymbol = groupName[CourseNumberPosition];
+        if (!char.IsDigit(courseNumberSymbol))
         {
-            throw new GroupNameException("StudyType is not valid: out of range");
+            throw new GroupNameException($"CourseNumber is not a number: {courseNumberSymbol}");
+        }
+
+        char studyTypeSymbol = groupName[StudyTypePosition];
+        if (!char.IsDigit(studyTypeSymbol))
+        {
+            throw new GroupNameException($"StudyType is not a number: {studyTypeSymbol}");
         }
 
         string groupNumberSymbols = groupName.Substring(GroupNumberPositionStart, GroupNumberLength);
         bool isGroupNumberNumeric = int.TryParse(groupNumberSymbols, out _);
         if (!isGroupNumberNumeric)
         {
-            throw new GroupNameException("GroupNumber is not numeric");
+            throw new GroupNameException($"GroupNumber is not a number: {groupNumberSymbols}");
         }
     }
 }
