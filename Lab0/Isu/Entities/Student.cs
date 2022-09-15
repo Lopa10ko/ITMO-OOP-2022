@@ -17,21 +17,14 @@ public class Student : IEquatable<Student>
 
     public bool Equals(Student? other)
     {
-        if (ReferenceEquals(null, other)) return false;
-        if (ReferenceEquals(this, other)) return true;
-        return IsuNumber == other.IsuNumber;
+        return other is not null && other.IsuNumber == IsuNumber;
     }
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
-        return Equals((Student)obj);
+        return Equals(obj as Student);
     }
 
     public override int GetHashCode()
-    {
-        return IsuNumber;
-    }
+        => IsuNumber;
 }

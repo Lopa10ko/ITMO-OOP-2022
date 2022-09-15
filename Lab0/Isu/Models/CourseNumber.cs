@@ -4,32 +4,34 @@ namespace Isu.Models;
 
 public class CourseNumber : IEquatable<CourseNumber>
 {
-    private const int MinNumber = 1;
-    private const int MaxNumber = 4;
+    private const int MinCourseNumber = 1;
+    private const int MaxCourseNumber = 4;
     private readonly int _courseNumber;
 
     public CourseNumber(int courseNumber)
     {
+        ValidateCourseNumber(courseNumber);
         _courseNumber = courseNumber;
     }
 
     public bool Equals(CourseNumber? other)
     {
-        if (ReferenceEquals(null, other)) return false;
-        if (ReferenceEquals(this, other)) return true;
-        return _courseNumber == other._courseNumber;
+        return other is not null && _courseNumber == other._courseNumber;
     }
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
-        return Equals((CourseNumber)obj);
+        return Equals(obj as CourseNumber);
     }
 
     public override int GetHashCode()
+        => _courseNumber;
+
+    private void ValidateCourseNumber(int courseNumber)
     {
-        return _courseNumber;
+        if (courseNumber is < MinCourseNumber or > MaxCourseNumber)
+        {
+            throw new GroupNameException($"CourseNumber {courseNumber} is not valid: out of range");
+        }
     }
 }

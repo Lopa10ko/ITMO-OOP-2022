@@ -24,21 +24,16 @@ public class GroupName : IEquatable<GroupName>
     public char FacultyLetter { get; }
 
     public CourseNumber GetCourseNumber()
-        => new CourseNumber(Convert.ToInt32(_groupName[(int)GroupNamePosition.CourseNumberPosition]));
+        => new CourseNumber(Convert.ToInt32(_groupName[CourseNumberPosition]));
 
     public bool Equals(GroupName? other)
     {
-        if (ReferenceEquals(null, other)) return false;
-        if (ReferenceEquals(this, other)) return true;
-        return _groupName == other._groupName && FacultyLetter == other.FacultyLetter;
+        return other is not null && _groupName == other._groupName && FacultyLetter == other.FacultyLetter;
     }
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
-        return Equals((GroupName)obj);
+        return Equals(obj as GroupName);
     }
 
     public override int GetHashCode()

@@ -22,23 +22,16 @@ public class Group : IEquatable<Group>
 
     public bool Equals(Group? other)
     {
-        if (ReferenceEquals(null, other)) return false;
-        if (ReferenceEquals(this, other)) return true;
-        return GroupName.Equals(other.GroupName);
+        return other is not null && GroupName.Equals(other.GroupName);
     }
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
-        return Equals((Group)obj);
+        return Equals(obj as Group);
     }
 
     public override int GetHashCode()
-    {
-        return GroupName.GetHashCode();
-    }
+        => GroupName.GetHashCode();
 
     internal void AddStudent(Student student)
     {
