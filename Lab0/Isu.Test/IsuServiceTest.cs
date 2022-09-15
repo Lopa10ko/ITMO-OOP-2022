@@ -30,7 +30,7 @@ public class IsuServiceTest
     {
         Group testGroup = _isuService.AddGroup(new GroupName(groupName));
         Student testStudent = _isuService.AddStudent(testGroup, name);
-        Assert.Contains(testStudent, testGroup.GetStudents());
+        Assert.Contains(testStudent, testGroup.GetStudents);
     }
 
     [Theory]
@@ -69,7 +69,7 @@ public class IsuServiceTest
         _isuService.ChangeStudentGroup(testStudent, newGroup);
         Assert.Equal(testStudent.Group, newGroup);
         Assert.NotEqual(testStudent.Group, oldGroup);
-        Assert.Contains(testStudent, newGroup.GetStudents());
-        Assert.DoesNotContain(testStudent, oldGroup.GetStudents());
+        Assert.Contains(testStudent, newGroup.GetStudents);
+        Assert.DoesNotContain(testStudent, oldGroup.GetStudents);
     }
 }

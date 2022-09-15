@@ -20,6 +20,7 @@ public class IsuService : IIsuService
     public Group AddGroup(GroupName name)
     {
         var group = new Group(name);
+
         if (_groups.Contains(group))
         {
             throw new GroupException("Group is already created");
