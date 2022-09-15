@@ -40,6 +40,7 @@ public class IsuService : IIsuService
         var student = new Student(_idIsu, name);
         _idIsu++;
         group.AddStudent(student);
+        student.AddGroup(group);
         _students.Add(student);
         return student;
     }
@@ -77,5 +78,6 @@ public class IsuService : IIsuService
 
         student.Group.RemoveStudent(student);
         newGroup.AddStudent(student);
+        student.AddGroup(newGroup);
     }
 }
