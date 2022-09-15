@@ -17,12 +17,12 @@ public class GroupName : IEquatable<GroupName>
     {
         ValidateGroupName(groupName);
         _groupName = groupName;
-        FacultyLetter = groupName[FacultyLetterPosition];
+        FacultyLetter = new FacultyLetter(groupName[FacultyLetterPosition]);
         StudyTypeNumber = new StudyTypeNumber(int.Parse(_groupName[StudyTypePosition].ToString()));
         CourseNumber = new CourseNumber(int.Parse(_groupName[CourseNumberPosition].ToString()));
     }
 
-    public char FacultyLetter { get; }
+    public FacultyLetter FacultyLetter { get; }
     public StudyTypeNumber StudyTypeNumber { get; }
     public CourseNumber CourseNumber { get; }
 
@@ -46,11 +46,6 @@ public class GroupName : IEquatable<GroupName>
         if (groupName.Length is < MinimumLength or > MaximumLength)
         {
             throw new GroupNameException("GroupName length is out of range");
-        }
-
-        if (!char.IsUpper(groupName[FacultyLetterPosition]))
-        {
-            throw new GroupNameException("First letter in GroupName must be in [A-Z]");
         }
 
         char courseNumberSymbol = groupName[CourseNumberPosition];
