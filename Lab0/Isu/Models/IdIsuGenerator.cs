@@ -23,7 +23,7 @@ public class IdIsuGenerator
         }
     }
 
-    public void IncrementIdIsu()
+    public void NextId()
         => ++IdIsu;
 
     private static void ValidateIdIsu(int value)
