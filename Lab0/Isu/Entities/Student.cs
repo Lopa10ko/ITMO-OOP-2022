@@ -6,14 +6,15 @@ namespace Isu.Entities;
 
 public class Student : IEquatable<Student>
 {
-    public Student(int isuNumber, string name)
+    public Student(int isuNumber, string name, Group group)
     {
         Name = name;
         IsuNumber = isuNumber;
+        Group = group;
     }
 
     public string Name { get; }
-    public Group? Group { get; set; }
+    public Group Group { get; private set; }
     public int IsuNumber { get; }
 
     public bool Equals(Student? other)
@@ -29,7 +30,7 @@ public class Student : IEquatable<Student>
     public override int GetHashCode()
         => IsuNumber;
 
-    internal void AddGroup(Group group)
+    internal void ChangeGroup(Group group)
     {
         if (group.Equals(Group))
         {
