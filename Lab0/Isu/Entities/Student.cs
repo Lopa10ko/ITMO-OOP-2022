@@ -11,6 +11,7 @@ public class Student : IEquatable<Student>
         Name = name;
         IsuNumber = isuNumber;
         Group = group;
+        group.AddStudent(this);
     }
 
     public string Name { get; }

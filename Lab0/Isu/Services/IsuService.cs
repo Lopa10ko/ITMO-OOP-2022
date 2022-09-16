@@ -39,7 +39,8 @@ public class IsuService : IIsuService
 
         var student = new Student(_idIsu.IdIsu, name, group);
         _idIsu.NextId();
-        group.AddStudent(student);
+
+        // group.AddStudent(student);
         _students.Add(student);
         return student;
     }
