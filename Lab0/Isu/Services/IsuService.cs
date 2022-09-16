@@ -46,28 +46,38 @@ public class IsuService : IIsuService
     }
 
     public Student GetStudent(int id)
-        => _students.Single(student => student.IsuNumber == id);
+        => _students
+            .Single(student => student.IsuNumber == id);
 
     public Student? FindStudent(int id)
-        => _students.SingleOrDefault(student => student.IsuNumber == id);
+        => _students
+            .SingleOrDefault(student => student.IsuNumber == id);
 
     public IReadOnlyList<Student> FindStudents(GroupName groupName)
     {
-        return _groups.Where(group => group.GroupName.Equals(groupName))
+        return _groups
+            .Where(group => group.GroupName.Equals(groupName))
             .SelectMany(group => group.GetStudents).ToList();
     }
 
     public IReadOnlyList<Student> FindStudents(CourseNumber courseNumber)
     {
-        return _groups.Where(group => group.GroupName.CourseNumber.Equals(courseNumber))
+        return _groups
+            .Where(group => group.GroupName.CourseNumber.Equals(courseNumber))
             .SelectMany(group => group.GetStudents).ToList();
     }
 
     public Group? FindGroup(GroupName groupName)
-        => _groups.FirstOrDefault(group => group.GroupName.Equals(groupName));
+    {
+        return _groups
+            .FirstOrDefault(group => group.GroupName.Equals(groupName));
+    }
 
     public IReadOnlyList<Group> FindGroups(CourseNumber courseNumber)
-        => _groups.Where(group => group.GroupName.CourseNumber.Equals(courseNumber)).ToList();
+    {
+        return _groups
+            .Where(group => group.GroupName.CourseNumber.Equals(courseNumber)).ToList();
+    }
 
     public void ChangeStudentGroup(Student student, Group newGroup)
     {
