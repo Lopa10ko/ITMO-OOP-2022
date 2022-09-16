@@ -58,7 +58,7 @@ public class IsuService : IIsuService
 
     public IReadOnlyList<Student> FindStudents(CourseNumber courseNumber)
     {
-        return _groups.Where(group => group.CourseNumber.Equals(courseNumber))
+        return _groups.Where(group => group.GroupName.CourseNumber.Equals(courseNumber))
             .SelectMany(group => group.GetStudents).ToList();
     }
 
@@ -66,7 +66,7 @@ public class IsuService : IIsuService
         => _groups.FirstOrDefault(group => group.GroupName.Equals(groupName));
 
     public IReadOnlyList<Group> FindGroups(CourseNumber courseNumber)
-        => _groups.Where(group => group.CourseNumber.Equals(courseNumber)).ToList();
+        => _groups.Where(group => group.GroupName.CourseNumber.Equals(courseNumber)).ToList();
 
     public void ChangeStudentGroup(Student student, Group newGroup)
     {

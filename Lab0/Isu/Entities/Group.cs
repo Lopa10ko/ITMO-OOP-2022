@@ -12,11 +12,9 @@ public class Group : IEquatable<Group>
     {
         _students = new List<Student>();
         GroupName = groupName;
-        CourseNumber = groupName.CourseNumber;
     }
 
     public GroupName GroupName { get; }
-    public CourseNumber CourseNumber { get; }
 
     public IReadOnlyList<Student> GetStudents => _students;
 
