@@ -28,7 +28,7 @@ public class GroupName : IEquatable<GroupName>
 
     public bool Equals(GroupName? other)
     {
-        return other is not null && _groupName == other._groupName && FacultyLetter == other.FacultyLetter;
+        return other is not null && _groupName.Equals(other._groupName) && FacultyLetter.Equals(other.FacultyLetter);
     }
 
     public override bool Equals(object? obj)

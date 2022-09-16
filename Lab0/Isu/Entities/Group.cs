@@ -46,8 +46,6 @@ public class Group : IEquatable<Group>
         }
 
         _students.Add(student);
-
-        // student.Group = this;
     }
 
     internal void RemoveStudent(Student student)

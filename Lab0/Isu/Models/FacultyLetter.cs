@@ -14,7 +14,7 @@ public class FacultyLetter : IEquatable<FacultyLetter>
 
     public bool Equals(FacultyLetter? other)
     {
-        return other is not null && _facultyLetter == other._facultyLetter;
+        return other is not null && _facultyLetter.Equals(other._facultyLetter);
     }
 
     public override bool Equals(object? obj)
