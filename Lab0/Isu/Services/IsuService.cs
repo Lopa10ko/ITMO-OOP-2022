@@ -23,7 +23,7 @@ public class IsuService : IIsuService
 
         if (_groups.Contains(group))
         {
-            throw IsuException.CreatedGroupException(group);
+            throw GroupLogicException.CreatedGroupException(group);
         }
 
         _groups.Add(group);
@@ -34,7 +34,7 @@ public class IsuService : IIsuService
     {
         if (!_groups.Contains(group))
         {
-            throw IsuException.UnknownObjectException(group);
+            throw GroupLogicException.UnknownObjectException(group);
         }
 
         var student = new Student(_idIsu.IdIsu, name, group);
@@ -72,17 +72,17 @@ public class IsuService : IIsuService
     {
         if (!_students.Contains(student))
         {
-            throw IsuException.UnknownObjectException(student);
+            throw GroupLogicException.UnknownObjectException(student);
         }
 
         if (!_groups.Contains(newGroup))
         {
-            throw IsuException.UnknownObjectException(newGroup);
+            throw GroupLogicException.UnknownObjectException(newGroup);
         }
 
         if (student.Group.Equals(null))
         {
-            throw IsuException.ChangeGroupException(student);
+            throw GroupLogicException.ChangeGroupException(student);
         }
 
         newGroup.AddStudent(student);

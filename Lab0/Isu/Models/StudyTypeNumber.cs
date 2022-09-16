@@ -31,13 +31,13 @@ public class StudyTypeNumber : IEquatable<StudyTypeNumber>
     {
         if (!char.IsDigit(studyTypeNumber))
         {
-            throw IsuException.GroupNameException($"StudyType is not a number: {studyTypeNumber}");
+            throw GroupNameException.InvalidFormatException(studyTypeNumber, "StudyType is not a number");
         }
 
         int studyTypeNumberNumeric = int.Parse(studyTypeNumber.ToString());
         if (studyTypeNumberNumeric is < MinStudyType or > MaxStudyType)
         {
-            throw IsuException.OutOfRangeException(studyTypeNumberNumeric, "StudyType");
+            throw GroupNameException.OutOfRangeException(studyTypeNumberNumeric, "StudyType");
         }
     }
 }

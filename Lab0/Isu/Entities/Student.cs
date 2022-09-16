@@ -34,7 +34,7 @@ public class Student : IEquatable<Student>
     {
         if (group.Equals(Group))
         {
-            throw IsuException.BelongingStudentException(this, group, "already");
+            throw GroupException.PointlessChangeException(this, group);
         }
 
         Group = group;

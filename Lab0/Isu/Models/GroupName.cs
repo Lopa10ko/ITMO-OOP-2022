@@ -45,14 +45,14 @@ public class GroupName : IEquatable<GroupName>
     {
         if (groupName.Length is < MinimumLength or > MaximumLength)
         {
-            throw IsuException.GroupNameException(groupName, "GroupName length is out of range");
+            throw GroupNameException.GroupNameFormatException(groupName, "GroupName length is out of range");
         }
 
         string groupNumberSymbols = groupName.Substring(GroupNumberPositionStart, GroupNumberLength);
         bool isGroupNumberNumeric = int.TryParse(groupNumberSymbols, out _);
         if (!isGroupNumberNumeric)
         {
-            throw IsuException.GroupNameException(groupName, $"GroupNumber is not a number: {groupNumberSymbols}");
+            throw GroupNameException.GroupNameFormatException(groupName, $"GroupNumber is not a number: {groupNumberSymbols}");
         }
     }
 }

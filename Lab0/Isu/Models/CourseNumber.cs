@@ -31,13 +31,13 @@ public class CourseNumber : IEquatable<CourseNumber>
     {
         if (!char.IsDigit(courseNumber))
         {
-            throw IsuException.GroupNameException($"CourseNumber is not a number: {courseNumber}");
+            throw GroupNameException.InvalidFormatException(courseNumber, "CourseNumber is not a number");
         }
 
         int courseNumberNumeric = int.Parse(courseNumber.ToString());
         if (courseNumberNumeric is < MinCourseNumber or > MaxCourseNumber)
         {
-            throw IsuException.OutOfRangeException(courseNumberNumeric, "CourseNumber");
+            throw GroupNameException.OutOfRangeException(courseNumberNumeric, "CourseNumber");
         }
     }
 }

@@ -30,7 +30,7 @@ public class IdIsuGenerator
     {
         if (value is < MinIdIsuNumber or > MaxIdIsuNumber)
         {
-            throw IsuException.OutOfRangeException(value, "IdIsu");
+            throw GroupNameException.OutOfRangeException(value, "IdIsu");
         }
     }
 }

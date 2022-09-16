@@ -29,7 +29,7 @@ public class FacultyLetter : IEquatable<FacultyLetter>
     {
         if (!char.IsUpper(facultyLetter))
         {
-            throw IsuException.FacultyLetterCaseException(facultyLetter);
+            throw GroupNameException.InvalidFormatException(facultyLetter, "FacultyLetter is not uppercase");
         }
     }
 }
