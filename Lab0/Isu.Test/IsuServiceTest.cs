@@ -3,7 +3,6 @@ using Isu.Models;
 using Isu.Services;
 using Isu.Tools;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Isu.Test;
 

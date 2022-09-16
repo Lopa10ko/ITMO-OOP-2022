@@ -8,13 +8,13 @@ public class IsuService : IIsuService
 {
     private readonly List<Group> _groups;
     private readonly List<Student> _students;
-    private int _idIsu;
+    private IdIsuGenerator _idIsu;
 
     public IsuService()
     {
         _groups = new List<Group>();
         _students = new List<Student>();
-        _idIsu = 1;
+        _idIsu = new IdIsuGenerator();
     }
 
     public Group AddGroup(GroupName name)
@@ -37,8 +37,8 @@ public class IsuService : IIsuService
             throw new GroupException("Group is not initialized");
         }
 
-        var student = new Student(_idIsu, name);
-        _idIsu++;
+        var student = new Student(_idIsu.IdIsu, name);
+        _idIsu.IncrementIdIsu();
         group.AddStudent(student);
         student.AddGroup(group);
         _students.Add(student);
@@ -51,13 +51,13 @@ public class IsuService : IIsuService
     public Student? FindStudent(int id)
         => _students.SingleOrDefault(student => student.IsuNumber == id);
 
-    public List<Student> FindStudents(GroupName groupName)
+    public IReadOnlyList<Student> FindStudents(GroupName groupName)
     {
         return _groups.Where(group => group.GroupName.Equals(groupName))
             .SelectMany(group => group.GetStudents).ToList();
     }
 
-    public List<Student> FindStudents(CourseNumber courseNumber)
+    public IReadOnlyList<Student> FindStudents(CourseNumber courseNumber)
     {
         return _groups.Where(group => group.CourseNumber.Equals(courseNumber))
             .SelectMany(group => group.GetStudents).ToList();
@@ -66,7 +66,7 @@ public class IsuService : IIsuService
     public Group? FindGroup(GroupName groupName)
         => _groups.FirstOrDefault(group => group.GroupName.Equals(groupName));
 
-    public List<Group> FindGroups(CourseNumber courseNumber)
+    public IReadOnlyList<Group> FindGroups(CourseNumber courseNumber)
         => _groups.Where(group => group.CourseNumber.Equals(courseNumber)).ToList();
 
     public void ChangeStudentGroup(Student student, Group newGroup)
