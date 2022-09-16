@@ -85,8 +85,8 @@ public class IsuService : IIsuService
             throw IsuException.ChangeGroupException(student);
         }
 
-        student.Group.RemoveStudent(student);
         newGroup.AddStudent(student);
+        student.Group.RemoveStudent(student);
         student.ChangeGroup(newGroup);
     }
 }
