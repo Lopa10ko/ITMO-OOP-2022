@@ -31,7 +31,7 @@ public class StudyTypeNumber : IEquatable<StudyTypeNumber>
     {
         if (studyTypeNumber is < MinStudyType or > MaxStudyType)
         {
-            throw new GroupNameException($"StudyType {studyTypeNumber} is not valid: out of range");
+            throw IsuException.OutOfRangeException(studyTypeNumber, "StudyType");
         }
     }
 }

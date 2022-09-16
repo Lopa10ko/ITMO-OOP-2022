@@ -29,7 +29,7 @@ public class FacultyLetter : IEquatable<FacultyLetter>
     {
         if (!char.IsUpper(facultyLetter))
         {
-            throw new GroupNameException($"Faculty letter in GroupName is invalid: {facultyLetter}");
+            throw IsuException.FacultyLetterCaseException(facultyLetter);
         }
     }
 }

@@ -23,7 +23,7 @@ public class IsuService : IIsuService
 
         if (_groups.Contains(group))
         {
-            throw new GroupException("Group is already created");
+            throw IsuException.CreatedGroupException(group);
         }
 
         _groups.Add(group);
@@ -34,7 +34,7 @@ public class IsuService : IIsuService
     {
         if (!_groups.Contains(group))
         {
-            throw new GroupException("Group is not initialized");
+            throw IsuException.UnknownObjectException(group);
         }
 
         var student = new Student(_idIsu.IdIsu, name);
@@ -71,9 +71,19 @@ public class IsuService : IIsuService
 
     public void ChangeStudentGroup(Student student, Group newGroup)
     {
-        if (student.Group == null)
+        if (!_students.Contains(student))
         {
-            throw new GroupException($"{student.Name} - {student.IsuNumber} must have oldGroup to change groups");
+            throw IsuException.UnknownObjectException(student);
+        }
+
+        if (!_groups.Contains(newGroup))
+        {
+            throw IsuException.UnknownObjectException(newGroup);
+        }
+
+        if (student.Group.Equals(null))
+        {
+            throw IsuException.ChangeGroupException(student);
         }
 
         student.Group.RemoveStudent(student);

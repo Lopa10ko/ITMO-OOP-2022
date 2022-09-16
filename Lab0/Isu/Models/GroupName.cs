@@ -45,26 +45,26 @@ public class GroupName : IEquatable<GroupName>
     {
         if (groupName.Length is < MinimumLength or > MaximumLength)
         {
-            throw new GroupNameException("GroupName length is out of range");
+            throw IsuException.GroupNameException(groupName, "GroupName length is out of range");
         }
 
         char courseNumberSymbol = groupName[CourseNumberPosition];
         if (!char.IsDigit(courseNumberSymbol))
         {
-            throw new GroupNameException($"CourseNumber is not a number: {courseNumberSymbol}");
+            throw IsuException.GroupNameException(groupName, $"CourseNumber is not a number: {courseNumberSymbol}");
         }
 
         char studyTypeSymbol = groupName[StudyTypePosition];
         if (!char.IsDigit(studyTypeSymbol))
         {
-            throw new GroupNameException($"StudyType is not a number: {studyTypeSymbol}");
+            throw IsuException.GroupNameException(groupName, $"StudyType is not a number: {studyTypeSymbol}");
         }
 
         string groupNumberSymbols = groupName.Substring(GroupNumberPositionStart, GroupNumberLength);
         bool isGroupNumberNumeric = int.TryParse(groupNumberSymbols, out _);
         if (!isGroupNumberNumeric)
         {
-            throw new GroupNameException($"GroupNumber is not a number: {groupNumberSymbols}");
+            throw IsuException.GroupNameException(groupName, $"GroupNumber is not a number: {groupNumberSymbols}");
         }
     }
 }

@@ -31,7 +31,7 @@ public class CourseNumber : IEquatable<CourseNumber>
     {
         if (courseNumber is < MinCourseNumber or > MaxCourseNumber)
         {
-            throw new GroupNameException($"CourseNumber {courseNumber} is not valid: out of range");
+            throw IsuException.OutOfRangeException(courseNumber, "CourseNumber");
         }
     }
 }

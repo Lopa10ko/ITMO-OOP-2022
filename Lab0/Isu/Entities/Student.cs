@@ -33,7 +33,7 @@ public class Student : IEquatable<Student>
     {
         if (group.Equals(Group))
         {
-            throw new GroupException($"Student {Name} - {IsuNumber} has group already");
+            throw IsuException.BelongingStudentException(this, group, "already");
         }
 
         Group = group;

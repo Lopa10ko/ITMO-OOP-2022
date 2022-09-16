@@ -37,12 +37,12 @@ public class Group : IEquatable<Group>
     {
         if (_students.Count >= GroupCapacity)
         {
-            throw new GroupException("Group capacity limit reached");
+            throw IsuException.ExceededGroupCapacityException(this, GroupCapacity);
         }
 
         if (_students.Contains(student))
         {
-            throw new GroupException("Student already in group");
+            throw IsuException.BelongingStudentException(student, this, "already");
         }
 
         _students.Add(student);
@@ -52,7 +52,7 @@ public class Group : IEquatable<Group>
     {
         if (!_students.Contains(student))
         {
-            throw new GroupException($"Student {student.Name} - {student.IsuNumber} is not in this group to delete");
+            throw IsuException.BelongingStudentException(student, this, "not");
         }
 
         _students.Remove(student);

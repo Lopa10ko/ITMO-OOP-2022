@@ -1,4 +1,6 @@
-﻿namespace Isu.Models;
+﻿using Isu.Tools;
+
+namespace Isu.Models;
 
 public class IdIsuGenerator
 {
@@ -28,7 +30,7 @@ public class IdIsuGenerator
     {
         if (value is < MinIdIsuNumber or > MaxIdIsuNumber)
         {
-            throw new Exception();
+            throw IsuException.OutOfRangeException(value, "IdIsu");
         }
     }
 }
