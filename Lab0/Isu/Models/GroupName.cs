@@ -41,7 +41,7 @@ public class GroupName : IEquatable<GroupName>
         return HashCode.Combine(Name, FacultyLetter);
     }
 
-    private void ValidateGroupName(string groupName)
+    private static void ValidateGroupName(string groupName)
     {
         if (groupName.Length is < MinimumLength or > MaximumLength)
         {

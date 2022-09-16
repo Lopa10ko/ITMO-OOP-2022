@@ -25,7 +25,7 @@ public class FacultyLetter : IEquatable<FacultyLetter>
     public override int GetHashCode()
         => _facultyLetter.GetHashCode();
 
-    private void ValidateFacultyLetter(char facultyLetter)
+    private static void ValidateFacultyLetter(char facultyLetter)
     {
         if (!char.IsUpper(facultyLetter))
         {

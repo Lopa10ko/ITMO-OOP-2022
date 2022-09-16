@@ -27,7 +27,7 @@ public class CourseNumber : IEquatable<CourseNumber>
     public override int GetHashCode()
         => _courseNumber;
 
-    private void ValidateCourseNumber(int courseNumber)
+    private static void ValidateCourseNumber(int courseNumber)
     {
         if (courseNumber is < MinCourseNumber or > MaxCourseNumber)
         {

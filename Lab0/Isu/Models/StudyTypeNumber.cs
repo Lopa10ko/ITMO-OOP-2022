@@ -27,7 +27,7 @@ public class StudyTypeNumber : IEquatable<StudyTypeNumber>
     public override int GetHashCode()
         => _studyTypeNumber;
 
-    private void ValidateStudyType(int studyTypeNumber)
+    private static void ValidateStudyType(int studyTypeNumber)
     {
         if (studyTypeNumber is < MinStudyType or > MaxStudyType)
         {

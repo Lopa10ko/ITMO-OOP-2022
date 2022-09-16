@@ -26,7 +26,7 @@ public class IdIsuGenerator
     public void IncrementIdIsu()
         => ++IdIsu;
 
-    private void ValidateIdIsu(int value)
+    private static void ValidateIdIsu(int value)
     {
         if (value is < MinIdIsuNumber or > MaxIdIsuNumber)
         {
