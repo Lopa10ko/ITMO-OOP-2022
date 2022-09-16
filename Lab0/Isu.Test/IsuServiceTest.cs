@@ -43,7 +43,7 @@ public class IsuServiceTest
             _isuService.AddStudent(testGroup, name);
         }
 
-        Assert.Throws<GroupException>(() => _isuService.AddStudent(testGroup, name));
+        Assert.Throws<IsuException>(() => _isuService.AddStudent(testGroup, name));
     }
 
     [Theory]
@@ -55,7 +55,7 @@ public class IsuServiceTest
     [InlineData("1310")]
     public void CreateGroupWithInvalidName_ThrowException(string groupName)
     {
-        Assert.Throws<GroupNameException>(() => _isuService.AddGroup(new GroupName(groupName)));
+        Assert.Throws<IsuException>(() => _isuService.AddGroup(new GroupName(groupName)));
     }
 
     [Theory]

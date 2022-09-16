@@ -37,10 +37,9 @@ public class IsuService : IIsuService
             throw IsuException.UnknownObjectException(group);
         }
 
-        var student = new Student(_idIsu.IdIsu, name);
+        var student = new Student(_idIsu.IdIsu, name, group);
         _idIsu.IncrementIdIsu();
         group.AddStudent(student);
-        student.AddGroup(group);
         _students.Add(student);
         return student;
     }
@@ -88,6 +87,6 @@ public class IsuService : IIsuService
 
         student.Group.RemoveStudent(student);
         newGroup.AddStudent(student);
-        student.AddGroup(newGroup);
+        student.ChangeGroup(newGroup);
     }
 }

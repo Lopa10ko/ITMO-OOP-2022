@@ -11,24 +11,24 @@ public class GroupName : IEquatable<GroupName>
     private const int GroupNumberPositionStart = 3;
     private const int MinimumLength = 5;
     private const int MaximumLength = 7;
-    private readonly string _groupName;
 
     public GroupName(string groupName)
     {
         ValidateGroupName(groupName);
-        _groupName = groupName;
+        Name = groupName;
         FacultyLetter = new FacultyLetter(groupName[FacultyLetterPosition]);
-        StudyTypeNumber = new StudyTypeNumber(int.Parse(_groupName[StudyTypePosition].ToString()));
-        CourseNumber = new CourseNumber(int.Parse(_groupName[CourseNumberPosition].ToString()));
+        StudyTypeNumber = new StudyTypeNumber(int.Parse(Name[StudyTypePosition].ToString()));
+        CourseNumber = new CourseNumber(int.Parse(Name[CourseNumberPosition].ToString()));
     }
 
     public FacultyLetter FacultyLetter { get; }
     public StudyTypeNumber StudyTypeNumber { get; }
     public CourseNumber CourseNumber { get; }
+    public string Name { get; }
 
     public bool Equals(GroupName? other)
     {
-        return other is not null && _groupName.Equals(other._groupName) && FacultyLetter.Equals(other.FacultyLetter);
+        return other is not null && Name.Equals(other.Name) && FacultyLetter.Equals(other.FacultyLetter);
     }
 
     public override bool Equals(object? obj)
@@ -38,7 +38,7 @@ public class GroupName : IEquatable<GroupName>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(_groupName, FacultyLetter);
+        return HashCode.Combine(Name, FacultyLetter);
     }
 
     private void ValidateGroupName(string groupName)
