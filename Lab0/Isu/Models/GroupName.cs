@@ -17,8 +17,8 @@ public class GroupName : IEquatable<GroupName>
         ValidateGroupName(groupName);
         Name = groupName;
         FacultyLetter = new FacultyLetter(groupName[FacultyLetterPosition]);
-        StudyTypeNumber = new StudyTypeNumber(int.Parse(Name[StudyTypePosition].ToString()));
-        CourseNumber = new CourseNumber(int.Parse(Name[CourseNumberPosition].ToString()));
+        StudyTypeNumber = new StudyTypeNumber(groupName[StudyTypePosition]);
+        CourseNumber = new CourseNumber(groupName[CourseNumberPosition]);
     }
 
     public FacultyLetter FacultyLetter { get; }
@@ -46,18 +46,6 @@ public class GroupName : IEquatable<GroupName>
         if (groupName.Length is < MinimumLength or > MaximumLength)
         {
             throw IsuException.GroupNameException(groupName, "GroupName length is out of range");
-        }
-
-        char courseNumberSymbol = groupName[CourseNumberPosition];
-        if (!char.IsDigit(courseNumberSymbol))
-        {
-            throw IsuException.GroupNameException(groupName, $"CourseNumber is not a number: {courseNumberSymbol}");
-        }
-
-        char studyTypeSymbol = groupName[StudyTypePosition];
-        if (!char.IsDigit(studyTypeSymbol))
-        {
-            throw IsuException.GroupNameException(groupName, $"StudyType is not a number: {studyTypeSymbol}");
         }
 
         string groupNumberSymbols = groupName.Substring(GroupNumberPositionStart, GroupNumberLength);

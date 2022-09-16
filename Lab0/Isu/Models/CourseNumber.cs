@@ -8,10 +8,10 @@ public class CourseNumber : IEquatable<CourseNumber>
     private const int MaxCourseNumber = 4;
     private readonly int _courseNumber;
 
-    public CourseNumber(int courseNumber)
+    public CourseNumber(char courseNumber)
     {
         ValidateCourseNumber(courseNumber);
-        _courseNumber = courseNumber;
+        _courseNumber = int.Parse(courseNumber.ToString());
     }
 
     public bool Equals(CourseNumber? other)
@@ -27,11 +27,17 @@ public class CourseNumber : IEquatable<CourseNumber>
     public override int GetHashCode()
         => _courseNumber;
 
-    private static void ValidateCourseNumber(int courseNumber)
+    private static void ValidateCourseNumber(char courseNumber)
     {
-        if (courseNumber is < MinCourseNumber or > MaxCourseNumber)
+        if (!char.IsDigit(courseNumber))
         {
-            throw IsuException.OutOfRangeException(courseNumber, "CourseNumber");
+            throw IsuException.GroupNameException($"CourseNumber is not a number: {courseNumber}");
+        }
+
+        int courseNumberNumeric = int.Parse(courseNumber.ToString());
+        if (courseNumberNumeric is < MinCourseNumber or > MaxCourseNumber)
+        {
+            throw IsuException.OutOfRangeException(courseNumberNumeric, "CourseNumber");
         }
     }
 }

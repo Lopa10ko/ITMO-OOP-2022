@@ -8,10 +8,10 @@ public class StudyTypeNumber : IEquatable<StudyTypeNumber>
     private const int MaxStudyType = 5;
     private readonly int _studyTypeNumber;
 
-    public StudyTypeNumber(int studyTypeNumber)
+    public StudyTypeNumber(char studyTypeNumber)
     {
         ValidateStudyType(studyTypeNumber);
-        _studyTypeNumber = studyTypeNumber;
+        _studyTypeNumber = int.Parse(studyTypeNumber.ToString());
     }
 
     public bool Equals(StudyTypeNumber? other)
@@ -27,11 +27,17 @@ public class StudyTypeNumber : IEquatable<StudyTypeNumber>
     public override int GetHashCode()
         => _studyTypeNumber;
 
-    private static void ValidateStudyType(int studyTypeNumber)
+    private static void ValidateStudyType(char studyTypeNumber)
     {
-        if (studyTypeNumber is < MinStudyType or > MaxStudyType)
+        if (!char.IsDigit(studyTypeNumber))
         {
-            throw IsuException.OutOfRangeException(studyTypeNumber, "StudyType");
+            throw IsuException.GroupNameException($"StudyType is not a number: {studyTypeNumber}");
+        }
+
+        int studyTypeNumberNumeric = int.Parse(studyTypeNumber.ToString());
+        if (studyTypeNumberNumeric is < MinStudyType or > MaxStudyType)
+        {
+            throw IsuException.OutOfRangeException(studyTypeNumberNumeric, "StudyType");
         }
     }
 }
