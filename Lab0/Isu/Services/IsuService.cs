@@ -80,19 +80,13 @@ public class IsuService : IIsuService
     public void ChangeStudentGroup(Student student, Group newGroup)
     {
         if (!_students.Contains(student))
-        {
             throw GroupLogicException.UnknownObjectException(student);
-        }
 
         if (!_groups.Contains(newGroup))
-        {
             throw GroupLogicException.UnknownObjectException(newGroup);
-        }
 
         if (student.Group.Equals(null))
-        {
             throw GroupLogicException.ChangeGroupException(student);
-        }
 
         student.ChangeGroup(newGroup);
     }
