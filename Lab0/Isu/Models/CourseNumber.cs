@@ -2,7 +2,7 @@ using Isu.Tools;
 
 namespace Isu.Models;
 
-public class CourseNumber : IEquatable<CourseNumber>
+public record class CourseNumber
 {
     private const int MinCourseNumber = 1;
     private const int MaxCourseNumber = 4;
@@ -12,16 +12,6 @@ public class CourseNumber : IEquatable<CourseNumber>
     {
         ValidateCourseNumber(courseNumber);
         _courseNumber = int.Parse(courseNumber.ToString());
-    }
-
-    public bool Equals(CourseNumber? other)
-    {
-        return other is not null && _courseNumber == other._courseNumber;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as CourseNumber);
     }
 
     public override int GetHashCode()

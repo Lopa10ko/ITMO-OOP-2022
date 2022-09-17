@@ -2,7 +2,7 @@
 
 namespace Isu.Models;
 
-public class StudyTypeNumber : IEquatable<StudyTypeNumber>
+public record StudyTypeNumber
 {
     private const int MinStudyType = 2;
     private const int MaxStudyType = 5;
@@ -12,16 +12,6 @@ public class StudyTypeNumber : IEquatable<StudyTypeNumber>
     {
         ValidateStudyType(studyTypeNumber);
         _studyTypeNumber = int.Parse(studyTypeNumber.ToString());
-    }
-
-    public bool Equals(StudyTypeNumber? other)
-    {
-        return other is not null && _studyTypeNumber == other._studyTypeNumber;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as StudyTypeNumber);
     }
 
     public override int GetHashCode()

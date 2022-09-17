@@ -2,7 +2,7 @@
 
 namespace Isu.Models;
 
-public class FacultyLetter : IEquatable<FacultyLetter>
+public record FacultyLetter
 {
     private readonly char _facultyLetter;
 
@@ -10,16 +10,6 @@ public class FacultyLetter : IEquatable<FacultyLetter>
     {
         ValidateFacultyLetter(facultyLetter);
         _facultyLetter = facultyLetter;
-    }
-
-    public bool Equals(FacultyLetter? other)
-    {
-        return other is not null && _facultyLetter.Equals(other._facultyLetter);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as FacultyLetter);
     }
 
     public override int GetHashCode()

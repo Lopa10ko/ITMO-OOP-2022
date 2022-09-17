@@ -2,7 +2,7 @@ using Isu.Tools;
 
 namespace Isu.Models;
 
-public class GroupName : IEquatable<GroupName>
+public record GroupName
 {
     private const int FacultyLetterPosition = 0;
     private const int StudyTypePosition = 1;
@@ -25,16 +25,6 @@ public class GroupName : IEquatable<GroupName>
     public StudyTypeNumber StudyTypeNumber { get; }
     public CourseNumber CourseNumber { get; }
     public string Name { get; }
-
-    public bool Equals(GroupName? other)
-    {
-        return other is not null && Name.Equals(other.Name) && FacultyLetter.Equals(other.FacultyLetter);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return Equals(obj as GroupName);
-    }
 
     public override int GetHashCode()
     {
