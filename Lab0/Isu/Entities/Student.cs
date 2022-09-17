@@ -38,6 +38,8 @@ public class Student : IEquatable<Student>
             throw GroupException.PointlessChangeException(this, group);
         }
 
+        group.AddStudent(this);
+        Group.RemoveStudent(this);
         Group = group;
     }
 }

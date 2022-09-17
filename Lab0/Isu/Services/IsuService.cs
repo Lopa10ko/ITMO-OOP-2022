@@ -39,8 +39,6 @@ public class IsuService : IIsuService
 
         var student = new Student(_idIsu.IdIsu, name, group);
         _idIsu.NextId();
-
-        // group.AddStudent(student);
         _students.Add(student);
         return student;
     }
@@ -96,8 +94,6 @@ public class IsuService : IIsuService
             throw GroupLogicException.ChangeGroupException(student);
         }
 
-        newGroup.AddStudent(student);
-        student.Group.RemoveStudent(student);
         student.ChangeGroup(newGroup);
     }
 }
