@@ -2,6 +2,6 @@
 
 public class ShopsException : Exception
 {
-    public ShopsException(string errorMessage)
+    protected ShopsException(string errorMessage)
         : base(errorMessage) { }
 }
