@@ -7,13 +7,23 @@ public interface IShopManager
 {
     Client AddClient(string clientName, decimal moneyAmount);
 
-    Shop CreateShop(ShopName name, Address address);
+    Shop CreateShop(string name, Address address);
 
-    Product AddProduct(Shop shop, decimal price, uint quantity);
+    Product RegisterProduct(string name);
 
-    IReadOnlyList<Product> GetShopCatalog(Shop shop);
+    void AddProduct(Product product, Shop shop, decimal price, int quantity);
 
-    Shop? FindShopAddress(int id);
+    IReadOnlyList<ProductCard> GetShopCatalog(Shop shop);
+
+    Shop? FindShop(Guid id);
+
+    Client? FindClient(Guid id);
+
+    ProductQuantity AddProductQuantityPair(Product product, int quantity);
 
     void ChangeProductPrice(Shop shop, Product product, decimal newPrice);
+
+    void BuyAllFromProductList(Client client, Shop shop, List<ProductQuantity> productList);
+
+    Shop? FindPriceOptimalShop(List<ProductQuantity> productList);
 }
