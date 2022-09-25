@@ -1,11 +1,10 @@
-﻿using System.Text.RegularExpressions;
-using Shops.Tools;
+﻿using Shops.Tools;
 
 namespace Shops.Models;
 
 public record Address
 {
-    private const string AddressPattern = @"^[A-Za-z\-.]*, [0-9]*(, [\w]*)?$";
+    private const int MinAddressLength = 100;
     public Address(string address)
     {
         ValidateAddress(address);
@@ -17,9 +16,9 @@ public record Address
     public override int GetHashCode()
         => AddressString.GetHashCode();
 
-    private void ValidateAddress(string address)
+    private static void ValidateAddress(string address)
     {
-        if (!Regex.IsMatch(address, AddressPattern))
-            throw AddressException.Create(address);
+        if (address.Length > MinAddressLength)
+            throw NamingException.Create(address);
     }
 }
