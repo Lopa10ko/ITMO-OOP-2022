@@ -65,8 +65,10 @@ public class Shop : IEquatable<Shop>
                 .Sum(pc => pc.Price * pq.Quantity));
     }
 
-    internal List<Product> Purchase(List<ProductQuantity> productList)
+    internal List<Product> Purchase(Client client, List<ProductQuantity> productList)
     {
+        CheckProductPresence(productList);
+        client.ChangeClientMoney(GetTotalPrice(productList));
         foreach (ProductQuantity pq in productList)
         {
             foreach (ProductCard pc in _products.Where(pc => pc.Product.Equals(pq.Product)))

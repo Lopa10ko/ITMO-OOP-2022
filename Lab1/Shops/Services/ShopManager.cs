@@ -99,9 +99,9 @@ public class ShopManager : IShopManager
             throw ShopManagerLogicException.NotExistingProductList();
         }
 
-        shop.CheckProductPresence(productList);
-        client.ChangeClientMoney(shop.GetTotalPrice(productList));
-        client.AddProductsToProductHistory(shop.Purchase(productList));
+        // shop.CheckProductPresence(productList);
+        // client.ChangeClientMoney(shop.GetTotalPrice(productList));
+        client.AddProductsToProductHistory(shop.Purchase(client, productList));
     }
 
     public Shop? FindPriceOptimalShop(List<ProductQuantity> productList)
