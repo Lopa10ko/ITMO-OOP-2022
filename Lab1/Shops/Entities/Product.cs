@@ -30,7 +30,7 @@ public class Product : IEquatable<Product>
 
     private static void ValidateName(string name)
     {
-        if (!Regex.IsMatch(name, NamePattern, RegexOptions.IgnoreCase))
+        if (!Regex.IsMatch(name, NamePattern, RegexOptions.Compiled | RegexOptions.IgnoreCase))
             throw NamingException.Create(name);
     }
 }
