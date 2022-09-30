@@ -7,7 +7,6 @@ public class Client : IEquatable<Client>
 {
     private const decimal MinMoneyAmount = 0;
     private List<Product> _productHistory;
-    private decimal _money;
 
     public Client(Guid idClient, string clientName, decimal moneyAmount)
     {
@@ -19,15 +18,7 @@ public class Client : IEquatable<Client>
 
     public string Name { get; }
 
-    public decimal MoneyBank
-    {
-        get => _money;
-        private set
-        {
-            ValidateMoneyAmount(value);
-            _money = value;
-        }
-    }
+    public decimal MoneyBank { get; private set; }
 
     public Guid Id { get; }
 
@@ -44,8 +35,7 @@ public class Client : IEquatable<Client>
 
     internal void ChangeClientMoney(decimal totalPrice)
     {
-        if (totalPrice > MoneyBank)
-            throw MoneyBankException.InvalidMoneyBankState(this);
+        ValidateMoneyAmount(MoneyBank - totalPrice);
         MoneyBank -= totalPrice;
     }
 
