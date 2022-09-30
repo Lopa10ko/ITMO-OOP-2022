@@ -19,6 +19,6 @@ public record Address
     private static void ValidateAddress(string address)
     {
         if (address.Length > MinAddressLength)
-            throw NamingException.Create(address);
+            throw NamingException.InvalidName(address);
     }
 }

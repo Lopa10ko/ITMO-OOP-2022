@@ -42,7 +42,7 @@ public class Client : IEquatable<Client>
     public override int GetHashCode()
         => Id.GetHashCode();
 
-    internal void TryGetClientMoney(decimal totalPrice)
+    internal void ChangeClientMoney(decimal totalPrice)
     {
         if (totalPrice > MoneyBank)
             throw MoneyBankException.InvalidMoneyBankState(this);

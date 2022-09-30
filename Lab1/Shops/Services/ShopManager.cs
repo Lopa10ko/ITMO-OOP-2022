@@ -100,7 +100,7 @@ public class ShopManager : IShopManager
         }
 
         shop.CheckProductPresence(productList);
-        client.TryGetClientMoney(shop.GetTotalPrice(productList));
+        client.ChangeClientMoney(shop.GetTotalPrice(productList));
         client.AddProductsToProductHistory(shop.Purchase(productList));
     }
 
