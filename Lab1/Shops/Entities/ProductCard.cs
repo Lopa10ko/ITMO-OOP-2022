@@ -19,7 +19,7 @@ public class ProductCard : IEquatable<ProductCard>
     public decimal Price
     {
         get => _price;
-        private set
+        set
         {
             if (value < MinDecimalValue)
                 throw ValueException.InvalidPriceValue(this, value);
@@ -51,7 +51,4 @@ public class ProductCard : IEquatable<ProductCard>
 
     internal void SetNewQuantity(int quantity)
         => Quantity += quantity;
-
-    internal void SetNewPrice(decimal price)
-        => Price = price;
 }
