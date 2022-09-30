@@ -83,7 +83,7 @@ public class Shop : IEquatable<Shop>
     {
         if (!IsProductInShop(product))
             throw ShopLogicException.ProductNotInShop(this, product);
-        _products.Single(pc => pc.Product.Equals(product)).SetNewPrice(newPrice);
+        _products.Single(pc => pc.Product.Equals(product)).Price = newPrice;
     }
 
     private bool IsProductInShop(Product product)
