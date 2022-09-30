@@ -5,7 +5,8 @@ namespace Shops.Entities;
 
 public class Product : IEquatable<Product>
 {
-    private const string NamePattern = @"^[a-z\-.,0-9\s]*$";
+    private static readonly Regex Validation = new Regex(@"^[a-z\-.,0-9\s]*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
     public Product(Guid id, string name)
     {
         ValidateName(name);
@@ -30,7 +31,7 @@ public class Product : IEquatable<Product>
 
     private static void ValidateName(string name)
     {
-        if (!Regex.IsMatch(name, NamePattern, RegexOptions.Compiled | RegexOptions.IgnoreCase))
+        if (!Validation.IsMatch(name))
             throw NamingException.Create(name);
     }
 }
