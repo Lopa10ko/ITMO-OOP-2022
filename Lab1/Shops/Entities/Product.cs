@@ -32,6 +32,6 @@ public class Product : IEquatable<Product>
     private static void ValidateName(string name)
     {
         if (!Validation.IsMatch(name))
-            throw NamingException.Create(name);
+            throw NamingException.InvalidName(name);
     }
 }
