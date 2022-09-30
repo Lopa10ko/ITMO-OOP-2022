@@ -29,15 +29,14 @@ public class Shop : IEquatable<Shop>
 
     public void CheckProductPresence(List<ProductQuantity> productList)
     {
-        if (productList
-            .Select(pr => pr.Product)
-            .Any(product => !IsProductInShop(product)))
+        IEnumerable<Product> products = productList.Select(pr => pr.Product);
+        if (products.Any(product => !IsProductInShop(product)))
         {
             throw ShopLogicException.InvalidProductQuantity(this);
         }
 
-        if (productList
-            .Any(pq => _products.Where(pc => pq.Product.Equals(pc.Product)).Any(pc => pq.Quantity > pc.Quantity)))
+        bool checkInvalidProductQuantity = productList.Any(pq => _products.Where(pc => pq.Product.Equals(pc.Product)).Any(pc => pq.Quantity > pc.Quantity));
+        if (checkInvalidProductQuantity)
         {
             throw ShopLogicException.InvalidProductQuantity(this);
         }
