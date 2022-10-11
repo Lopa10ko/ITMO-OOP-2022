@@ -8,7 +8,7 @@ public class Group : IEquatable<Group>
     private const int GroupCapacity = 25;
     private List<Student> _students;
 
-    public Group(GroupName groupName)
+    internal Group(GroupName groupName)
     {
         _students = new List<Student>();
         GroupName = groupName;

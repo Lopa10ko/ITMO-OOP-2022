@@ -20,12 +20,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Entities" />
-      <Folder Include="Models" />
-      <Folder Include="Services" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\Lab0\Isu\Isu.csproj" />
     </ItemGroup>
 
