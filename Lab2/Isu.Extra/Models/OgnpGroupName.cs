@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Isu.Extra.Tools;
 using Isu.Models;
 
 namespace Isu.Extra.Models;
@@ -27,7 +28,7 @@ public record OgnpGroupName : GroupName
                 "ПМИ" => "M",
                 "ИКТ" => "K",
                 "ФОТ" => "V",
-                _ => throw new Exception("Alien faculty")
+                _ => throw AlienEntityException.AlienFacultyException(groupName.Substring(OgnpGroupLetterPositionStart, OgnpGroupLetterPositionLength)),
             };
         return groupFacultySymbol + StudyTypeAndCoursePair + groupName[3] + groupName[5];
     }
@@ -35,8 +36,8 @@ public record OgnpGroupName : GroupName
     private static void ValidateOgnpGroupName(string groupName)
     {
         if (groupName.Length != OgnpGroupNameLength)
-            throw new Exception("OgnpGroupNameLength is not correct");
+            throw OgnpGroupNameValueException.InvalidLength(groupName, OgnpGroupNameLength);
         if (!Validation.IsMatch(groupName))
-            throw new Exception("OgnpGroupName is not formatted correctly");
+            throw OgnpGroupNameValueException.InvalidFormatting(groupName);
     }
 }

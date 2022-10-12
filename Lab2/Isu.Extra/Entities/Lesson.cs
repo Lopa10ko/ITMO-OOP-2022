@@ -1,4 +1,6 @@
-﻿namespace Isu.Extra.Entities;
+﻿using Isu.Extra.Tools;
+
+namespace Isu.Extra.Entities;
 
 public record Lesson
 {
@@ -28,12 +30,12 @@ public record Lesson
     private static void ValidateLessonTime(TimeOnly lessonStartTime, TimeOnly lessonEndTime)
     {
         if (lessonStartTime > lessonEndTime)
-            throw new Exception();
+            throw LessonException.InvalidLessonTime(lessonStartTime, lessonEndTime);
     }
 
     private static void ValidateLessonRoom(int lessonRoom)
     {
         if (lessonRoom < 0)
-            throw new Exception();
+            throw LessonException.InvalidLessonRoom(lessonRoom);
     }
 }

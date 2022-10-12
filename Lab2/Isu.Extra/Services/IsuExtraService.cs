@@ -1,6 +1,7 @@
 ﻿using Isu.Entities;
 using Isu.Extra.Entities;
 using Isu.Extra.Models;
+using Isu.Extra.Tools;
 using Isu.Models;
 using Isu.Services;
 
@@ -44,18 +45,19 @@ public class IsuExtraService : IIsuExtraService
 
     public void AddStudent(OgnpGroup ognpGroup, Student student)
     {
-        if (!_ognpGroups.Contains(ognpGroup))
-            throw new Exception();
-        if (_signedStudents.Contains(student))
-            throw new Exception();
+        ValidateOgnpGroupPresence(ognpGroup);
+        ValidateStudentRegisterState(ognpGroup, student);
+        if (ognpGroup.OgnpGroupName.FacultyLetter.Equals(student.Group.GroupName.FacultyLetter))
+            throw LogicException.InvalidOgnpAddition(ognpGroup, student);
+        ValidateSchedulesPresence(ognpGroup, student);
+        ValidateOverlappingSchedules(ognpGroup, student);
         ognpGroup.AddStudent(student);
         _signedStudents.Add(student);
     }
 
     public void RemoveStudent(OgnpGroup ognpGroup, Student student)
     {
-        if (!_ognpGroups.Contains(ognpGroup))
-            throw new Exception();
+        ValidateOgnpGroupPresence(ognpGroup);
         ognpGroup.RemoveStudent(student);
         _signedStudents.Remove(student);
     }
@@ -73,24 +75,51 @@ public class IsuExtraService : IIsuExtraService
     }
 
     public IReadOnlyList<OgnpGroup> GetOgnpGroups(FacultyLetter facultyLetter)
-        => _ognpGroups.
-            Where(g => g.OgnpGroupName.FacultyLetter.Equals(facultyLetter)).
-            ToList();
+        => _ognpGroups.Where(g => g.OgnpGroupName.FacultyLetter.Equals(facultyLetter)).ToList();
 
     public IReadOnlyList<Student> FindStudents(OgnpGroupName ognpGroupName)
-        => _ognpGroups.
-            Single(g => g.OgnpGroupName.Equals(ognpGroupName)).
-            GetStudents;
+        => _ognpGroups.Single(g => g.OgnpGroupName.Equals(ognpGroupName)).GetStudents;
 
     public IReadOnlyList<Student> FindNotSignedUpStudents(Group group)
+        => (IReadOnlyList<Student>)group.GetStudents.Where(s => !_signedStudents.Contains(s));
+
+    private void ValidateOgnpGroupPresence(OgnpGroup ognpGroup)
     {
-        // foreach (Student student in group.GetStudents)
-        // {
-        //     foreach (OgnpGroup ognpGroup in _ognpGroups)
-        //     {
-        //         if (ognpGroup.GetStudents.Contains(student))
-        //     }
-        // }
-        throw new NotImplementedException();
+        if (!_ognpGroups.Contains(ognpGroup))
+            throw AlienEntityException.AlienOgnpGroup(ognpGroup);
+    }
+
+    private void ValidateOgnpGroupRegisterState(OgnpGroup ognpGroup)
+    {
+        if (_ognpGroups.Contains(ognpGroup))
+            throw OgnpGroupException.GroupAlreadyExists(ognpGroup);
+    }
+
+    private void ValidateStudentRegisterState(OgnpGroup ognpGroup, Student student)
+    {
+        if (_signedStudents.Contains(student))
+            throw LogicException.InvalidRegisteredStudentState(ognpGroup, student);
+    }
+
+    private void ValidateOverlappingSchedules(OgnpGroup ognpGroup, Student student)
+    {
+        Schedule ognpSchedule = _scheduleService
+            .GetOgnpGroupSchedules()
+            .Single(gs => gs.Group.Equals(ognpGroup))
+            .Schedule;
+        Schedule studentSchedule = _scheduleService
+            .GetGroupSchedules()
+            .Single(gs => gs.Group.Equals(student.Group))
+            .Schedule;
+        if (ognpSchedule.IsOverlapping(studentSchedule))
+            throw LogicException.OverlappingSchedules(ognpGroup, student);
+    }
+
+    private void ValidateSchedulesPresence(OgnpGroup ognpGroup, Student student)
+    {
+        if (!_scheduleService.GetOgnpGroupSchedules().Any(gs => gs.Group.Equals(ognpGroup)))
+            throw LogicException.InvalidSchedulesState(ognpGroup, student, "OgnpGroup");
+        if (!_scheduleService.GetGroupSchedules().Any(gs => gs.Group.Equals(student.Group)))
+            throw LogicException.InvalidSchedulesState(ognpGroup, student, "Group");
     }
 }

@@ -1,4 +1,5 @@
-﻿using Isu.Models;
+﻿using Isu.Extra.Tools;
+using Isu.Models;
 
 namespace Isu.Extra.Entities;
 
@@ -37,7 +38,11 @@ public class Schedule
         {
             bool overlapping = _lessons.Any(lesson => lesson.IsOverlapping(otherLesson));
             if (overlapping)
-                throw new Exception();
+            {
+                Lesson overlappingLesson = _lessons.Single(lesson => lesson.IsOverlapping(otherLesson));
+                throw ScheduleBuilderException.OverlappingLessons(overlappingLesson, otherLesson);
+            }
+
             _lessons.Add(otherLesson);
             return this;
         }

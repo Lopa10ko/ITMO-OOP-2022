@@ -1,5 +1,6 @@
 ﻿using Isu.Entities;
 using Isu.Extra.Models;
+using Isu.Extra.Tools;
 using Isu.Models;
 
 namespace Isu.Extra.Entities;
@@ -35,7 +36,9 @@ public class OgnpGroup : IEquatable<OgnpGroup>
     internal void AddStudent(Student student)
     {
         if (_students.Count >= GroupCapacity)
-            throw new Exception();
+            throw OgnpGroupException.ExceededCapacityLimit(this, student, GroupCapacity);
+        if (_students.Contains(student))
+            throw OgnpGroupException.PointlessStudentAddition(this, student);
 
         // throw GroupException.ExceededGroupCapacityException(this, GroupCapacity);
         _students.Add(student);
@@ -44,7 +47,7 @@ public class OgnpGroup : IEquatable<OgnpGroup>
     internal void RemoveStudent(Student student)
     {
         if (!_students.Contains(student))
-            throw new Exception();
+            throw OgnpGroupException.PointlessStudentRemoval(this, student);
 
         // throw GroupException.BelongingStudentException(student, this, "not");
         _students.Remove(student);
