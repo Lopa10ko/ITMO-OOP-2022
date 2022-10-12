@@ -15,7 +15,7 @@ public class Schedule
     public static ScheduleBuilder Builder => new ScheduleBuilder();
 
     public bool IsOverlapping(Schedule otherSchedule)
-        => _lessons.All(lesson => otherSchedule._lessons.Any(lesson.IsOverlapping));
+        => _lessons.Any(lesson => otherSchedule._lessons.Any(lesson.IsOverlapping));
 
     public bool IsOverlappingProfessor(Schedule otherSchedule)
         => _lessons.Any(lesson => otherSchedule._lessons.Any(otherLesson =>
