@@ -18,5 +18,5 @@ public class OgnpGroupException : IsuExtraException
         => new OgnpGroupException($"Student {student.Name} - {student.IsuNumber} not in OgnpGroup {ognpGroup.OgnpGroupName} to remove");
 
     public static OgnpGroupException GroupAlreadyExists(OgnpGroup ognpGroup)
-        => new OgnpGroupException($"OgnpGroup {ognpGroup.OgnpGroupName} is already registered");
+        => new OgnpGroupException($"OgnpGroup {ognpGroup.OgnpGroupName.Name} is already registered");
 }

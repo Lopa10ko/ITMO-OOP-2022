@@ -9,14 +9,14 @@ public class LogicException : IsuExtraException
         : base(errorMessage) { }
 
     public static LogicException InvalidOgnpAddition(OgnpGroup ognpGroup, Student student)
-        => new LogicException($"Student {student.Name} - {student.IsuNumber} addition to OgnpGroup {ognpGroup.OgnpGroupName} failed: same faculty {student.Group.GroupName.FacultyLetter}");
+        => new LogicException($"Student {student.Name} - {student.IsuNumber} addition to OgnpGroup {ognpGroup.OgnpGroupName.Name} failed: same faculty {student.Group.GroupName.FacultyLetter}");
 
     public static LogicException InvalidRegisteredStudentState(OgnpGroup ognpGroup, Student student)
-        => new LogicException($"Student {student.Name} - {student.IsuNumber} addition to OgnpGroup {ognpGroup.OgnpGroupName} failed: already registered");
+        => new LogicException($"Student {student.Name} - {student.IsuNumber} addition to OgnpGroup {ognpGroup.OgnpGroupName.Name} failed: already registered");
 
     public static LogicException OverlappingSchedules(OgnpGroup ognpGroup, Student student)
-        => new LogicException($"Student {student.Name} - {student.IsuNumber} addition to OgnpGroup {ognpGroup.OgnpGroupName} failed: overlapping schedules");
+        => new LogicException($"Student {student.Name} - {student.IsuNumber} addition to OgnpGroup {ognpGroup.OgnpGroupName.Name} failed: overlapping schedules");
 
     public static LogicException InvalidSchedulesState(OgnpGroup ognpGroup, Student student, string groupType)
-        => new LogicException($"Student {student.Name} - {student.IsuNumber} addition to OgnpGroup {ognpGroup.OgnpGroupName} failed: {groupType} schedule does not exist");
+        => new LogicException($"Student {student.Name} - {student.IsuNumber} addition to OgnpGroup {ognpGroup.OgnpGroupName.Name} failed: {groupType} schedule does not exist");
 }
