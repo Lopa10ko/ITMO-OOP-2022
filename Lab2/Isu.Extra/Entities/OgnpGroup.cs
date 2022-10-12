@@ -8,7 +8,7 @@ namespace Isu.Extra.Entities;
 public class OgnpGroup : IEquatable<OgnpGroup>
 {
     private const int GroupCapacity = 25;
-    private List<Student> _students;
+    private readonly List<Student> _students;
 
     public OgnpGroup(OgnpGroupName groupName)
     {
