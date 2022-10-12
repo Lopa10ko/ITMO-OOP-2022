@@ -13,16 +13,16 @@ public class OgnpGroup : IEquatable<OgnpGroup>
     public OgnpGroup(OgnpGroupName groupName)
     {
         _students = new List<Student>();
-        OgnpGroupName = groupName;
+        GroupName = groupName;
     }
 
-    public OgnpGroupName OgnpGroupName { get; }
+    public OgnpGroupName GroupName { get; }
 
     public IReadOnlyList<Student> GetStudents => _students;
 
     public bool Equals(OgnpGroup? other)
     {
-        return other is not null && OgnpGroupName.Equals(other.OgnpGroupName);
+        return other is not null && GroupName.Equals(other.GroupName);
     }
 
     public override bool Equals(object? obj)
@@ -31,7 +31,7 @@ public class OgnpGroup : IEquatable<OgnpGroup>
     }
 
     public override int GetHashCode()
-        => OgnpGroupName.GetHashCode();
+        => GroupName.GetHashCode();
 
     internal void AddStudent(Student student)
     {

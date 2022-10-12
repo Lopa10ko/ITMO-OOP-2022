@@ -11,5 +11,5 @@ public class AlienEntityException : IsuExtraException
         => new AlienEntityException($"Not existing Faculty {facultyString}");
 
     public static AlienEntityException AlienOgnpGroup(OgnpGroup ognpGroup)
-        => new AlienEntityException($"Not registered OgnpGroup {ognpGroup.OgnpGroupName.Name}");
+        => new AlienEntityException($"Not registered OgnpGroup {ognpGroup.GroupName.Name}");
 }

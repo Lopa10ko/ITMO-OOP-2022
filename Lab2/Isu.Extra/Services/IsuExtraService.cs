@@ -43,7 +43,7 @@ public class IsuExtraService : IIsuExtraService
     {
         ValidateOgnpGroupPresence(ognpGroup);
         ValidateStudentRegisterState(ognpGroup, student);
-        if (ognpGroup.OgnpGroupName.FacultyLetter.Equals(student.Group.GroupName.FacultyLetter))
+        if (ognpGroup.GroupName.FacultyLetter.Equals(student.Group.GroupName.FacultyLetter))
             throw LogicException.InvalidOgnpAddition(ognpGroup, student);
         ValidateSchedulesPresence(ognpGroup, student);
         ValidateOverlappingSchedules(ognpGroup, student);
@@ -62,7 +62,7 @@ public class IsuExtraService : IIsuExtraService
     {
         var tempStudents = new List<Student>();
         foreach (OgnpGroup ognpGroup in _ognpGroups
-                     .Where(ognpGroup => ognpGroup.OgnpGroupName.FacultyLetter.Equals(facultyLetter)))
+                     .Where(ognpGroup => ognpGroup.GroupName.FacultyLetter.Equals(facultyLetter)))
         {
             tempStudents.AddRange(ognpGroup.GetStudents);
         }
@@ -71,10 +71,10 @@ public class IsuExtraService : IIsuExtraService
     }
 
     public IReadOnlyList<OgnpGroup> GetOgnpGroups(FacultyLetter facultyLetter)
-        => _ognpGroups.Where(g => g.OgnpGroupName.FacultyLetter.Equals(facultyLetter)).ToList();
+        => _ognpGroups.Where(g => g.GroupName.FacultyLetter.Equals(facultyLetter)).ToList();
 
     public IReadOnlyList<Student> FindStudents(OgnpGroupName ognpGroupName)
-        => _ognpGroups.Single(g => g.OgnpGroupName.Equals(ognpGroupName)).GetStudents;
+        => _ognpGroups.Single(g => g.GroupName.Equals(ognpGroupName)).GetStudents;
 
     public IReadOnlyList<Student> FindNotSignedUpStudents(Group group)
         => (IReadOnlyList<Student>)group.GetStudents.Where(s => !_signedStudents.Contains(s));

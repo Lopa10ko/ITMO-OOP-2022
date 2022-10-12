@@ -49,7 +49,7 @@ public class IsuExtraServiceTest
         _isuExtraService.AddGroupSchedule(tGroup, groupSchedule);
         OgnpGroup tOgnpGroup = _isuExtraService.AddOgnpGroup(new OgnpGroupName(ognpGroupName));
         _isuExtraService.AddOgnpGroupSchedule(tOgnpGroup, ognpSchedule);
-        Assert.NotEqual(tGroup.GroupName, tOgnpGroup.OgnpGroupName);
+        Assert.NotEqual(tGroup.GroupName, tOgnpGroup.GroupName);
         Student tStudent = _isuService.AddStudent(tGroup, name);
         Assert.Equal(tGroup, tStudent.Group);
         _isuExtraService.AddStudent(tOgnpGroup, tStudent);

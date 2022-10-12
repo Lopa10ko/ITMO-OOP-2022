@@ -19,11 +19,11 @@ public class Schedule
 
     public bool IsOverlappingProfessor(Schedule otherSchedule)
         => _lessons.Any(lesson => otherSchedule._lessons.Any(otherLesson =>
-            lesson.IsOverlapping(otherLesson) && lesson.LessonProfessor.Equals(otherLesson.LessonProfessor)));
+            lesson.IsOverlapping(otherLesson) && lesson.Professor.Equals(otherLesson.Professor)));
 
     public bool IsOverlappingRoom(Schedule otherSchedule)
         => _lessons.Any(lesson => otherSchedule._lessons.Any(otherLesson =>
-            lesson.IsOverlapping(otherLesson) && lesson.LessonRoom.Equals(otherLesson.LessonRoom)));
+            lesson.IsOverlapping(otherLesson) && lesson.Room.Equals(otherLesson.Room)));
 
     public class ScheduleBuilder
     {
@@ -34,16 +34,16 @@ public class Schedule
             return new Schedule(_lessons);
         }
 
-        public ScheduleBuilder AddLesson(Lesson otherLesson)
+        public ScheduleBuilder AddLesson(Lesson other)
         {
-            bool overlapping = _lessons.Any(lesson => lesson.IsOverlapping(otherLesson));
+            bool overlapping = _lessons.Any(lesson => lesson.IsOverlapping(other));
             if (overlapping)
             {
-                Lesson overlappingLesson = _lessons.Single(lesson => lesson.IsOverlapping(otherLesson));
-                throw ScheduleBuilderException.OverlappingLessons(overlappingLesson, otherLesson);
+                Lesson overlappingLesson = _lessons.Single(lesson => lesson.IsOverlapping(other));
+                throw ScheduleBuilderException.OverlappingLessons(overlappingLesson, other);
             }
 
-            _lessons.Add(otherLesson);
+            _lessons.Add(other);
             return this;
         }
     }
