@@ -40,7 +40,6 @@ public class OgnpGroup : IEquatable<OgnpGroup>
         if (_students.Contains(student))
             throw OgnpGroupException.PointlessStudentAddition(this, student);
 
-        // throw GroupException.ExceededGroupCapacityException(this, GroupCapacity);
         _students.Add(student);
     }
 
@@ -49,7 +48,6 @@ public class OgnpGroup : IEquatable<OgnpGroup>
         if (!_students.Contains(student))
             throw OgnpGroupException.PointlessStudentRemoval(this, student);
 
-        // throw GroupException.BelongingStudentException(student, this, "not");
         _students.Remove(student);
     }
 }

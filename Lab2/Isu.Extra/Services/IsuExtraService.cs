@@ -23,18 +23,14 @@ public class IsuExtraService : IIsuExtraService
     public OgnpGroup AddOgnpGroup(OgnpGroupName name)
     {
         var ognpGroup = new OgnpGroup(name);
-        if (_ognpGroups.Contains(ognpGroup))
-            throw new Exception();
-
-        // throw GroupLogicException.CreatedGroupException(ognpGroup);
+        ValidateOgnpGroupRegisterState(ognpGroup);
         _ognpGroups.Add(ognpGroup);
         return ognpGroup;
     }
 
     public void AddOgnpGroupSchedule(OgnpGroup ognpGroup, Schedule schedule)
     {
-        if (!_ognpGroups.Contains(ognpGroup))
-            throw new Exception();
+        ValidateOgnpGroupPresence(ognpGroup);
         _scheduleService.AddSchedule(ognpGroup, schedule);
     }
 
