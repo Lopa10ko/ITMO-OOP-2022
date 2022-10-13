@@ -28,22 +28,22 @@ public class IsuExtraServiceTest
     public void AddStudentToGroupAndOgnp_StudentHasGroupAndOgnp(string groupName, string ognpGroupName, string name)
     {
         Schedule groupSchedule = new Schedule.ScheduleBuilder()
-            .AddLesson(new Lesson("OPP", "Fredi Bats", 3401, DayOfWeek.Monday, new TimeOnly(8, 20), new TimeOnly(9, 50)))
-            .AddLesson(new Lesson("OPO", "Fredi Cats", 3401, DayOfWeek.Monday, new TimeOnly(10, 0), new TimeOnly(11, 40)))
-            .AddLesson(new Lesson("OOP", "Круглов", 100, DayOfWeek.Monday, new TimeOnly(13, 30), new TimeOnly(15, 0)))
-            .AddLesson(new Lesson("PPO", "Шаров", 100, DayOfWeek.Monday, new TimeOnly(15, 10), new TimeOnly(16, 40)))
-            .AddLesson(new Lesson("ML", "Fredi Dogs", 3401, DayOfWeek.Tuesday, new TimeOnly(8, 20), new TimeOnly(9, 50)))
-            .AddLesson(new Lesson("Git", "Daddy Dogs", 3401, DayOfWeek.Tuesday, new TimeOnly(10, 0), new TimeOnly(11, 40)))
-            .AddLesson(new Lesson("Windows", "I-SER-I", 100, DayOfWeek.Tuesday, new TimeOnly(13, 30), new TimeOnly(15, 0)))
-            .AddLesson(new Lesson("БЖД", "1menemi1", 100, DayOfWeek.Tuesday, new TimeOnly(15, 10), new TimeOnly(16, 40)))
+            .AddLesson(new Lesson("OPP", new Professor("Fredi Bats"), 3401, DayOfWeek.Monday, new TimeOnly(8, 20), new TimeOnly(9, 50)))
+            .AddLesson(new Lesson("OPO", new Professor("Fredi Cats"), 3401, DayOfWeek.Monday, new TimeOnly(10, 0), new TimeOnly(11, 40)))
+            .AddLesson(new Lesson("OOP", new Professor("Ronimizy"), 100, DayOfWeek.Monday, new TimeOnly(13, 30), new TimeOnly(15, 0)))
+            .AddLesson(new Lesson("PPO", new Professor("O-l-e-g"), 100, DayOfWeek.Monday, new TimeOnly(15, 10), new TimeOnly(16, 40)))
+            .AddLesson(new Lesson("ML", new Professor("Fredi Dogs"), 3401, DayOfWeek.Tuesday, new TimeOnly(8, 20), new TimeOnly(9, 50)))
+            .AddLesson(new Lesson("Git", new Professor("Daddy Dogs"), 3401, DayOfWeek.Tuesday, new TimeOnly(10, 0), new TimeOnly(11, 40)))
+            .AddLesson(new Lesson("Windows", new Professor("I-SER-I"), 100, DayOfWeek.Tuesday, new TimeOnly(13, 30), new TimeOnly(15, 0)))
+            .AddLesson(new Lesson("БЖД", new Professor("menemi"), 100, DayOfWeek.Tuesday, new TimeOnly(15, 10), new TimeOnly(16, 40)))
             .Build();
         Schedule ognpSchedule = new Schedule.ScheduleBuilder()
-            .AddLesson(new Lesson("OPP", "Fredi Bats", 3401, DayOfWeek.Wednesday, new TimeOnly(8, 20), new TimeOnly(9, 50)))
-            .AddLesson(new Lesson("OPO", "Fredi Cats", 3401, DayOfWeek.Wednesday, new TimeOnly(10, 0), new TimeOnly(11, 40)))
-            .AddLesson(new Lesson("OOP", "Круглов", 100, DayOfWeek.Wednesday, new TimeOnly(13, 30), new TimeOnly(15, 0)))
-            .AddLesson(new Lesson("PPO", "Шаров", 100, DayOfWeek.Wednesday, new TimeOnly(15, 10), new TimeOnly(16, 40)))
-            .AddLesson(new Lesson("PhysEd", "Ermolay", 3440, DayOfWeek.Tuesday, new TimeOnly(17, 00), new TimeOnly(18, 30)))
-            .AddLesson(new Lesson("C/C++", "Zhuikov", 3440, DayOfWeek.Tuesday, new TimeOnly(7, 21), new TimeOnly(7, 50)))
+            .AddLesson(new Lesson("OPP", new Professor("Fredi Bats"), 3401, DayOfWeek.Wednesday, new TimeOnly(8, 20), new TimeOnly(9, 50)))
+            .AddLesson(new Lesson("OPO", new Professor("Fredi Cats"), 3401, DayOfWeek.Wednesday, new TimeOnly(10, 0), new TimeOnly(11, 40)))
+            .AddLesson(new Lesson("OOP", new Professor("Ronimizy"), 100, DayOfWeek.Wednesday, new TimeOnly(13, 30), new TimeOnly(15, 0)))
+            .AddLesson(new Lesson("PPO", new Professor("O-l-e-g"), 100, DayOfWeek.Wednesday, new TimeOnly(15, 10), new TimeOnly(16, 40)))
+            .AddLesson(new Lesson("PhysEd", new Professor("Ermolay"), 3440, DayOfWeek.Tuesday, new TimeOnly(17, 00), new TimeOnly(18, 30)))
+            .AddLesson(new Lesson("C/C++", new Professor("Zhuikov"), 3440, DayOfWeek.Tuesday, new TimeOnly(7, 21), new TimeOnly(7, 50)))
             .Build();
         Group tGroup = _isuService.AddGroup(new GroupName(groupName));
         _isuExtraService.AddGroupSchedule(tGroup, groupSchedule);
@@ -63,14 +63,14 @@ public class IsuExtraServiceTest
     public void AddStudentToOgnpRemoveFromOgnp_StudentHasGroup(string groupName, string ognpGroupName, string name)
     {
         Schedule groupSchedule = new Schedule.ScheduleBuilder()
-            .AddLesson(new Lesson("PPO", "Шаров", 100, DayOfWeek.Wednesday, new TimeOnly(15, 10), new TimeOnly(16, 40)))
-            .AddLesson(new Lesson("ML", "Fredi Dogs", 3401, DayOfWeek.Tuesday, new TimeOnly(8, 20), new TimeOnly(9, 50)))
-            .AddLesson(new Lesson("Git", "Daddy Dogs", 3401, DayOfWeek.Wednesday, new TimeOnly(10, 0), new TimeOnly(11, 30)))
+            .AddLesson(new Lesson("PPO", new Professor("O-l-e-g"), 100, DayOfWeek.Wednesday, new TimeOnly(15, 10), new TimeOnly(16, 40)))
+            .AddLesson(new Lesson("ML", new Professor("Fredi Dogs"), 3401, DayOfWeek.Tuesday, new TimeOnly(8, 20), new TimeOnly(9, 50)))
+            .AddLesson(new Lesson("Git", new Professor("Daddy Dogs"), 3401, DayOfWeek.Wednesday, new TimeOnly(10, 0), new TimeOnly(11, 30)))
             .Build();
         Schedule ognpSchedule = new Schedule.ScheduleBuilder()
-            .AddLesson(new Lesson("OPP", "Fredi Bats", 3401, DayOfWeek.Wednesday, new TimeOnly(8, 20), new TimeOnly(9, 50)))
-            .AddLesson(new Lesson("OPO", "Fredi Cats", 3401, DayOfWeek.Wednesday, new TimeOnly(11, 40), new TimeOnly(13, 10)))
-            .AddLesson(new Lesson("OOP", "Круглов", 100, DayOfWeek.Wednesday, new TimeOnly(13, 30), new TimeOnly(15, 0)))
+            .AddLesson(new Lesson("OPP", new Professor("Fredi Bats"), 3401, DayOfWeek.Wednesday, new TimeOnly(8, 20), new TimeOnly(9, 50)))
+            .AddLesson(new Lesson("OPO", new Professor("Fredi Cats"), 3401, DayOfWeek.Wednesday, new TimeOnly(11, 40), new TimeOnly(13, 10)))
+            .AddLesson(new Lesson("OOP", new Professor("Ronimizy"), 100, DayOfWeek.Wednesday, new TimeOnly(13, 30), new TimeOnly(15, 0)))
             .Build();
         Group tGroup = _isuService.AddGroup(new GroupName(groupName));
         _isuExtraService.AddGroupSchedule(tGroup, groupSchedule);
@@ -86,18 +86,18 @@ public class IsuExtraServiceTest
     [Fact]
     public void AddStudentToGroup_StudentHasGroup()
     {
-        var tLessonEng1 = new Lesson("English", "Фредерикс Эндрю", 100, DayOfWeek.Monday, new TimeOnly(8, 20), new TimeOnly(9, 50));
-        var tLessonEng2 = new Lesson("English", "Фредерикс Эндрю", 100, DayOfWeek.Monday, new TimeOnly(10, 0), new TimeOnly(11, 30));
-        var tLessonPhys1 = new Lesson("Physics", "Музыченко", 100, DayOfWeek.Monday, new TimeOnly(13, 30), new TimeOnly(15, 0));
-        var tLessonPhys2 = new Lesson("Physics", "Тимофеева", 100, DayOfWeek.Monday, new TimeOnly(17, 0), new TimeOnly(18, 30));
-        var tLessonEng12 = new Lesson("English", "Данияли Сара", 101, DayOfWeek.Monday, new TimeOnly(8, 20), new TimeOnly(9, 50));
-        var tLessonEng22 = new Lesson("English", "Данияли Сара", 101, DayOfWeek.Monday, new TimeOnly(10, 0), new TimeOnly(11, 30));
-        var tLessonPhys12 = new Lesson("Physics", "Зинчик", 101, DayOfWeek.Monday, new TimeOnly(13, 30), new TimeOnly(15, 0));
-        var tLessonPhys22 = new Lesson("Physics", "Круглов", 101, DayOfWeek.Monday, new TimeOnly(17, 0), new TimeOnly(18, 30));
-        var tNewLessonEng12 = new Lesson("English", "Фредерикс Эндрю", 102, DayOfWeek.Monday, new TimeOnly(8, 20), new TimeOnly(9, 50));
-        var tNewLessonEng22 = new Lesson("English", "Фредерикс Эндрю", 102, DayOfWeek.Monday, new TimeOnly(10, 0), new TimeOnly(11, 30));
-        var tNewLessonPhys12 = new Lesson("Physics", "Тимофеева", 102, DayOfWeek.Monday, new TimeOnly(13, 30), new TimeOnly(15, 0));
-        var tNewLessonPhys22 = new Lesson("Physics", "Музыченко", 102, DayOfWeek.Monday, new TimeOnly(17, 0), new TimeOnly(18, 30));
+        var tLessonEng1 = new Lesson("English", new Professor("Frederiks A."), 100, DayOfWeek.Monday, new TimeOnly(8, 20), new TimeOnly(9, 50));
+        var tLessonEng2 = new Lesson("English", new Professor("Frederiks A."), 100, DayOfWeek.Monday, new TimeOnly(10, 0), new TimeOnly(11, 30));
+        var tLessonPhys1 = new Lesson("Physics", new Professor("Muzichenko"), 100, DayOfWeek.Monday, new TimeOnly(13, 30), new TimeOnly(15, 0));
+        var tLessonPhys2 = new Lesson("Physics", new Professor("Timofeeva"), 100, DayOfWeek.Monday, new TimeOnly(17, 0), new TimeOnly(18, 30));
+        var tLessonEng12 = new Lesson("English", new Professor("Sara Danieli"), 101, DayOfWeek.Monday, new TimeOnly(8, 20), new TimeOnly(9, 50));
+        var tLessonEng22 = new Lesson("English", new Professor("Sara Danieli"), 101, DayOfWeek.Monday, new TimeOnly(10, 0), new TimeOnly(11, 30));
+        var tLessonPhys12 = new Lesson("Physics", new Professor("Zinchik"), 101, DayOfWeek.Monday, new TimeOnly(13, 30), new TimeOnly(15, 0));
+        var tLessonPhys22 = new Lesson("Physics", new Professor("Ronimizy"), 101, DayOfWeek.Monday, new TimeOnly(17, 0), new TimeOnly(18, 30));
+        var tNewLessonEng12 = new Lesson("English", new Professor("Frederiks A."), 102, DayOfWeek.Monday, new TimeOnly(8, 20), new TimeOnly(9, 50));
+        var tNewLessonEng22 = new Lesson("English", new Professor("Frederiks A."), 102, DayOfWeek.Monday, new TimeOnly(10, 0), new TimeOnly(11, 30));
+        var tNewLessonPhys12 = new Lesson("Physics", new Professor("Timofeeva"), 102, DayOfWeek.Monday, new TimeOnly(13, 30), new TimeOnly(15, 0));
+        var tNewLessonPhys22 = new Lesson("Physics", new Professor("Muzichenko"), 102, DayOfWeek.Monday, new TimeOnly(17, 0), new TimeOnly(18, 30));
 
         Group tGroup1 = _isuService.AddGroup(new GroupName("N3231"));
         Group tGroup2 = _isuService.AddGroup(new GroupName("N3232"));

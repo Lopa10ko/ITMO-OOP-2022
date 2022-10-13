@@ -11,5 +11,5 @@ public class ScheduleBuilderException : IsuExtraException
         => new ScheduleBuilderException($"Lesson {FormatLesson(otherLesson)} addition failed: overlapping with Lesson {FormatLesson(lesson)}");
 
     private static string FormatLesson(Lesson lesson)
-        => $"{lesson.Name} : {lesson.Professor} : {lesson.Room} : {lesson.DayOfWeek} : {lesson.StartTime}-{lesson.EndTime}";
+        => $"{lesson.Name} : {lesson.Professor.Name} : {lesson.Room} : {lesson.DayOfWeek} : {lesson.StartTime}-{lesson.EndTime}";
 }
