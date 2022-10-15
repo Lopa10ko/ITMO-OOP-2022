@@ -6,7 +6,7 @@ namespace Isu.Entities;
 
 public class Student : IEquatable<Student>
 {
-    public Student(int isuNumber, string name, Group group)
+    internal Student(int isuNumber, string name, Group group)
     {
         Name = name;
         IsuNumber = isuNumber;
