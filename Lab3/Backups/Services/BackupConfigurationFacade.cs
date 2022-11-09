@@ -1,4 +1,5 @@
-﻿using Backups.Algorithms;
+﻿using System.Collections.Generic;
+using Backups.Algorithms;
 using Backups.Archiver;
 using Backups.Entities;
 using Backups.Models;
