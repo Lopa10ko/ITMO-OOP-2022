@@ -3,6 +3,7 @@ using Backups.Archiver;
 using Backups.Models;
 using Backups.Repositories;
 using Backups.Services;
+using Backups.Tools;
 
 namespace Backups.Entities;
 
@@ -32,22 +33,21 @@ public class BackupTask
     public void AddBackupItem(IBackupItem backupItem)
     {
         if (_trackingItems.Contains(backupItem))
-            throw new Exception();
+            throw BackupTaskException.ExistingItem(backupItem);
         _trackingItems.Add(backupItem);
     }
 
     public void DeleteBackupItem(IBackupItem backupItem)
     {
         if (!_trackingItems.Contains(backupItem))
-            throw new Exception();
+            throw BackupTaskException.NonExistingItem(backupItem);
         _trackingItems.Remove(backupItem);
     }
 
     public RestorePoint CreateRestorePoint()
     {
-        var restorePoint = new RestorePoint(_trackingItems);
-        _creationAlgorithm.Archive(restorePoint, _repository, _archiver);
-        _backup.AddRestorePoint(restorePoint);
+        var restorePoint = new RestorePoint(_creationAlgorithm.Operate(_trackingItems, _repository, _archiver), _trackingItems);
+        Backup.AddRestorePoint(restorePoint);
         return restorePoint;
     }
 
