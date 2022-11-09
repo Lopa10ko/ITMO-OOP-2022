@@ -1,14 +1,20 @@
+using System.Collections.Generic;
+using System.Linq;
 using Backups.Archiver;
 using Backups.Entities;
+using Backups.Models;
 using Backups.Repositories;
+using Backups.RepositoryItems;
 using Backups.Services;
+using Backups.Storages;
 
 namespace Backups.Algorithms;
 
-public class SplitStorage : ICreationAlgorithm
+public class SplitStorageAlgorithm : ICreationAlgorithm
 {
-    public void Archive(RestorePoint restorePoint, IRepository repository, IArchiver archiver)
-    {
-        throw new NotImplementedException();
-    }
+    public IStorage Operate(IEnumerable<IBackupItem> trackingItems, IRepository repository, IArchiver archiver)
+        => new SplitStorage(trackingItems
+            .Select(backupItem
+                => backupItem.GetRepository().GenerateRepositoryItem(backupItem))
+            .Select(ri => archiver.Archive(new List<IRepositoryItem> { ri }, repository)));
 }

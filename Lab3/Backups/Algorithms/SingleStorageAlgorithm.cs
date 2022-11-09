@@ -1,28 +1,24 @@
+using System.Collections.Generic;
 using System.IO.Compression;
+using System.Linq;
 using Backups.Archiver;
 using Backups.Entities;
+using Backups.Models;
 using Backups.Repositories;
+using Backups.RepositoryItems;
 using Backups.Services;
+using Backups.Storages;
 
 namespace Backups.Algorithms;
 
 public class SingleStorageAlgorithm : ICreationAlgorithm
 {
-    public void Archive(RestorePoint restorePoint, IRepository repository, IArchiver archiver)
+    public IStorage Operate(IEnumerable<IBackupItem> trackingItems, IRepository repository, IArchiver archiver)
     {
-        var storage = new Storage(repository);
-        Stream repoStream = repository.OpenStream($"{restorePoint.Id.ToString()}.zip");
-        using var archive = new ZipArchive(repoStream, ZipArchiveMode.Create);
-        foreach (IBackupItem backupItem in restorePoint.Items)
-        {
-            /*backupItem.GetRepository();*/
-            storage.SaveBackupItem(backupItem, archive);
-        }
+        var repositoryItems = trackingItems.
+            Select(backupItem => backupItem.GetRepository().GenerateRepositoryItem(backupItem))
+            .ToList();
 
-        restorePoint.AddStorage(storage);
-        /*repository.Load(items);
-        repository.AddStorages(items);
-        restorePoint.AddRepository(repository);
-        repository.Save(items);*/
+        return archiver.Archive(repositoryItems, repository);
     }
 }
