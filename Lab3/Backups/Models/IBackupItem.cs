@@ -1,6 +1,6 @@
 ﻿using Backups.Repositories;
 
-namespace Backups.Services;
+namespace Backups.Models;
 
 public interface IBackupItem
 {

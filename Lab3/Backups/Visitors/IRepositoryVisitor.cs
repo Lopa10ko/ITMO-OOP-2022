@@ -1,5 +1,8 @@
-﻿using Backups.RepositoryItems;
+﻿using System.Collections.Generic;
+using System.IO;
+using Backups.RepositoryItems;
 using Backups.Services;
+using Backups.ZipArchivedItems;
 
 namespace Backups.Visitors;
 
@@ -7,17 +10,5 @@ public interface IRepositoryVisitor
 {
     void Visit(IRepositoryNode node);
     void Visit(IRepositoryLeaf leaf);
-}
-
-public class FileSystemVisitor : IRepositoryVisitor
-{
-    public void Visit(IRepositoryNode node)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Visit(IRepositoryLeaf leaf)
-    {
-        throw new NotImplementedException();
-    }
+    IEnumerable<IZipArchivedItem> GetLastOnStack();
 }
