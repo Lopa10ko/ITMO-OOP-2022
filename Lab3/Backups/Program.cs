@@ -14,8 +14,7 @@ public static class Program
     {
         const string fileA = "stalin.png";
         const string fileB = "folderA\\Lab_1_05.pdf";
-
-        // const string fileC = "zalupa\\";
+        const string folderB = "folderB\\";
         IRepository sourceRepository = new FileSystemRepository(@"C:\Users\George\Desktop\test\");
         IRepository testRepository = new FileSystemRepository(@"C:\Users\George\Desktop\saved\");
         var configSingleLocalZip =
@@ -23,8 +22,7 @@ public static class Program
         BackupTask backupTask = configSingleLocalZip.CreateBackupTask();
         backupTask.AddBackupItem(new FileBackupItem(fileA, sourceRepository));
         backupTask.AddBackupItem(new FileBackupItem(fileB, sourceRepository));
-
-        // backupTask.AddBackupItem(new FileBackupItem(fileC, fileSystemRepository));
+        backupTask.AddBackupItem(new FileBackupItem(folderB, sourceRepository));
         backupTask.CreateRestorePoint();
     }
 }
