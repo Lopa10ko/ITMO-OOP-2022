@@ -6,15 +6,15 @@ namespace Backups.Models;
 
 public class FileBackupItem : IBackupItem
 {
-    public FileBackupItem(string path, IRepository repository)
+    public FileBackupItem(string relativePath, IRepository repository)
     {
-        FilePath = path;
+        RelativePath = relativePath;
         Repository = repository;
     }
 
     public IRepository Repository { get; }
-    public string FilePath { get; }
+    public string RelativePath { get; }
 
-    public string GetPath() => FilePath;
+    public string GetPath() => RelativePath;
     public IRepository GetRepository() => Repository;
 }
