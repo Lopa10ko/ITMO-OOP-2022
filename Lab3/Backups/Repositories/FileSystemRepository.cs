@@ -18,11 +18,6 @@ public class FileSystemRepository : IRepository
     public Stream OpenStream(string archiveName)
         => new FileStream($"{Source}\\{archiveName}", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
-    public void Save(List<ZipArchive> archivedItems)
-    {
-        throw new NotImplementedException();
-    }
-
     public string GetSource() => Source;
 
     public IRepositoryItem GenerateRepositoryItem(IBackupItem backupItem)
@@ -33,7 +28,7 @@ public class FileSystemRepository : IRepository
             return new FileSystemLeaf(backupItemRelativeId, backupItemFullPath, () => File.Open(backupItemFullPath, FileMode.Open, FileAccess.Read));
         if (Directory.Exists(backupItemFullPath))
             return new FileSystemNode(backupItemRelativeId, backupItemFullPath, () => GetItemsList(backupItemFullPath));
-        throw new Exception("not existing item in directory");
+        throw FileSystemRepositoryException.InvalidBackupItem(backupItem);
     }
 
     private static void Validate(string sourcePath)
