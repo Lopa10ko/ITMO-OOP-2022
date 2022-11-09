@@ -1,28 +1,23 @@
-﻿using Backups.Services;
+﻿using Backups.Models;
+using Backups.Services;
+using Backups.Storages;
 
 namespace Backups.Entities;
 
 public class RestorePoint : IEquatable<RestorePoint>
 {
-    private readonly List<Storage> _storages;
-    public RestorePoint(IReadOnlyList<IBackupItem> trackingItems)
+    public RestorePoint(IStorage storage, IEnumerable<IBackupItem> items)
     {
-        Items = trackingItems;
-        /* TODO: trackingItems or List<ZipArchive> archived */
-        _storages = new List<Storage>();
+        Storage = storage;
         CreationTime = DateTime.Now;
         Id = Guid.NewGuid();
+        Items = items;
     }
 
     public Guid Id { get; }
     public DateTime CreationTime { get; }
-    public IReadOnlyList<IBackupItem> Items { get; }
-    public IReadOnlyList<Storage> Storages => _storages.AsReadOnly();
-
-    public void AddStorage(Storage storage)
-    {
-        _storages.Add(storage);
-    }
+    public IStorage Storage { get; }
+    public IEnumerable<IBackupItem> Items { get; }
 
     public bool Equals(RestorePoint? other)
     => other is not null && Id.Equals(other.Id) && CreationTime.Equals(other.CreationTime);
