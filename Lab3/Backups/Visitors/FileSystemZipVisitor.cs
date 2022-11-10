@@ -19,7 +19,9 @@ public class FileSystemZipVisitor : IRepositoryVisitor
 
     public void Visit(IRepositoryNode node)
     {
-        _archives.Push(new ZipArchive(_archives.Peek().CreateEntry(node.GetNodeId()).Open(), ZipArchiveMode.Create));
+        using Stream stream = _archives.Peek().CreateEntry(node.GetNodeId()).Open();
+        using var zipArchive = new ZipArchive(stream, ZipArchiveMode.Create);
+        _archives.Push(zipArchive);
         _zipArchivedItems.Push(new List<IZipArchivedItem>());
         foreach (IRepositoryItem repositoryItem in node.GetItems())
         {
