@@ -12,9 +12,8 @@ public static class Program
 {
     public static void Main()
     {
-        TestSingle();
-
-        // TestSplit();
+        // TestSingle();
+        TestSplit();
     }
 
     private static void TestSingle()
