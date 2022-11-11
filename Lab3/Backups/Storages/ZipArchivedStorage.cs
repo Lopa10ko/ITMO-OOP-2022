@@ -19,7 +19,7 @@ public class ZipArchivedStorage : IStorage
 
     public IEnumerable<IRepositoryItem> GetRepositoryItems()
     {
-        /*=> Items.Select(zi => zi.GetRepositoryItem(zi.Entry)).ToList();*/
+        /*=> Items.Select(zi => zi.GetRepositoryItem()).ToList();*/
         throw new NotImplementedException();
     }
 }
