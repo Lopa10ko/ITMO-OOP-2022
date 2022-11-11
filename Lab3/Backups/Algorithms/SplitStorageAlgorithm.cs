@@ -14,7 +14,9 @@ public class SplitStorageAlgorithm : ICreationAlgorithm
 {
     public IStorage Operate(IEnumerable<IBackupItem> trackingItems, IRepository repository, IArchiver archiver)
         => new SplitStorage(trackingItems
-            .Select(backupItem
-                => backupItem.GetRepository().GenerateRepositoryItem(backupItem))
-            .Select(ri => archiver.Archive(new List<IRepositoryItem> { ri }, repository)));
+            .Select(backupItem => backupItem.GetRepository().GenerateRepositoryItem(backupItem))
+            .ToList()
+            .Select(item => new List<IRepositoryItem> { item })
+            .Select(repoTempList => archiver.Archive(repoTempList, repository))
+            .ToList());
 }
