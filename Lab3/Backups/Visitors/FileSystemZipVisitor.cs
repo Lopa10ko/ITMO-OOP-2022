@@ -28,7 +28,7 @@ public class FileSystemZipVisitor : IRepositoryVisitor
             repositoryItem.Accept(this);
         }
 
-        _zipArchivedItems.Peek().Add(new ZipArchivedNode(node.GetNodeRelativePath(), _zipArchivedItems.Pop()));
+        _zipArchivedItems.Peek().Add(new ZipArchivedNode(node.GetNodeRelativePath(), node.GetSourceId(), _zipArchivedItems.Pop()));
         _archives.Pop();
     }
 
@@ -38,7 +38,7 @@ public class FileSystemZipVisitor : IRepositoryVisitor
         using Stream leafStream = leafEntry.Open();
         using Stream currenStream = leaf.GetCurrentStream();
         currenStream.CopyTo(leafStream);
-        _zipArchivedItems.Peek().Add(new ZipArchivedFile(leaf.GetLeafId(), leafEntry));
+        _zipArchivedItems.Peek().Add(new ZipArchivedFile(leaf.GetLeafId(), leaf.GetSourceId(), leafEntry));
     }
 
     public IEnumerable<IZipArchivedItem> GetLastOnStack()
