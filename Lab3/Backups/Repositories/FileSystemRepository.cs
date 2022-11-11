@@ -20,15 +20,14 @@ public class FileSystemRepository : IRepository
 
     public string GetSource() => Source;
 
-    public IRepositoryItem GenerateRepositoryItem(IBackupItem backupItem)
+    public IRepositoryItem GenerateRepositoryItem(string backupItemRelativeId)
     {
-        string backupItemRelativeId = backupItem.GetPath();
         string backupItemFullPath = $"{Source}{backupItemRelativeId}";
         if (File.Exists(backupItemFullPath))
             return new FileSystemLeaf(backupItemRelativeId, backupItemFullPath, () => File.Open(backupItemFullPath, FileMode.Open, FileAccess.Read));
         if (Directory.Exists(backupItemFullPath))
             return new FileSystemNode(backupItemRelativeId, backupItemFullPath, () => GetItemsList(backupItemFullPath));
-        throw FileSystemRepositoryException.InvalidBackupItem(backupItem);
+        throw FileSystemRepositoryException.InvalidBackupItem(backupItemRelativeId);
     }
 
     private static void Validate(string sourcePath)

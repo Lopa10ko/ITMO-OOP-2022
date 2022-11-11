@@ -9,6 +9,6 @@ public class FileSystemRepositoryException : BackupException
 
     public static FileSystemRepositoryException IncorrectDirectoryStringFormat(string sourcePath)
         => new FileSystemRepositoryException($"Invalid DirectoryId {sourcePath} - should be ...\\");
-    public static FileSystemRepositoryException InvalidBackupItem(IBackupItem backupItem)
-        => new FileSystemRepositoryException($"Invalid file: {backupItem.GetPath()}");
+    public static FileSystemRepositoryException InvalidBackupItem(string backupItemId)
+        => new FileSystemRepositoryException($"Invalid file: {backupItemId}");
 }

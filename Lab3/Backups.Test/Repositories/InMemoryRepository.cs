@@ -23,15 +23,14 @@ public class InMemoryRepository : IRepository
     public Stream OpenStream(string archiveName)
          => FileSystem.OpenFile($"{Source}\\{archiveName}", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
-    public IRepositoryItem GenerateRepositoryItem(IBackupItem backupItem)
+    public IRepositoryItem GenerateRepositoryItem(string backupItemRelativeId)
     {
-        string backupItemRelativeId = backupItem.GetPath();
         string backupItemFullPath = $"{Source}{backupItemRelativeId}";
         if (FileSystem.FileExists(backupItemFullPath))
             return new FileSystemLeaf(backupItemRelativeId, backupItemFullPath, () => FileSystem.OpenFile(backupItemFullPath, FileMode.Open, FileAccess.Read));
         if (FileSystem.DirectoryExists(backupItemFullPath))
             return new FileSystemNode(backupItemRelativeId, backupItemFullPath, () => GetItemsList(backupItemFullPath));
-        throw FileSystemRepositoryException.InvalidBackupItem(backupItem);
+        throw FileSystemRepositoryException.InvalidBackupItem(backupItemRelativeId);
     }
 
     public string GetSource() => Source;

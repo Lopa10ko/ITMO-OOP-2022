@@ -9,6 +9,6 @@ namespace Backups.Repositories;
 public interface IRepository
 {
     Stream OpenStream(string archiveName);
-    IRepositoryItem GenerateRepositoryItem(IBackupItem backupItem);
+    IRepositoryItem GenerateRepositoryItem(string backupItemRelativeId);
     string GetSource();
 }
