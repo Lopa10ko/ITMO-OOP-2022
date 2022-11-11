@@ -19,7 +19,5 @@ public class ZipArchivedFile : IZipArchivedItem
     public string GetArchivedItemId() => Name;
 
     public IRepositoryItem GetRepositoryItem(ZipArchiveEntry zipArchiveEntry)
-    {
-        throw new NotImplementedException();
-    }
+        => new FileSystemLeaf(Name, Source, zipArchiveEntry.Open);
 }

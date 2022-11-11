@@ -20,7 +20,17 @@ public class ZipArchivedNode : IZipArchivedItem
     public string GetArchivedItemId() => Name;
 
     public IRepositoryItem GetRepositoryItem(ZipArchiveEntry zipArchiveEntry)
+        => new FileSystemNode(Name, Source, () => GetFunc(zipArchiveEntry));
+
+    private List<IRepositoryItem> GetFunc(ZipArchiveEntry zipArchiveEntry)
     {
-        throw new NotImplementedException();
+        using Stream stream = zipArchiveEntry.Open();
+        var archive = new ZipArchive(stream, ZipArchiveMode.Read);
+        return _items
+            .Select(item => item.GetRepositoryItem(GetEntry(item.GetArchivedItemId(), archive)))
+            .ToList();
     }
+
+    private ZipArchiveEntry GetEntry(string archivedItemId, ZipArchive archive)
+        => archive.GetEntry(archivedItemId) ?? throw new ArgumentNullException();
 }
