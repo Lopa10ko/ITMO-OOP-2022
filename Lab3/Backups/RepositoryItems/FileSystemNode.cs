@@ -26,6 +26,9 @@ public class FileSystemNode : IRepositoryNode
     public string GetNodeRelativePath()
         => _relativePath;
 
+    public string GetSourceId()
+        => _fullPath;
+
     public IEnumerable<IRepositoryItem> GetItems()
         => _fileCollection();
 }

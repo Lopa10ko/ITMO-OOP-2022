@@ -5,5 +5,6 @@ namespace Backups.ZipArchivedItems;
 
 public interface IZipArchivedItem
 {
+    string GetArchivedItemId();
     IRepositoryItem GetRepositoryItem(ZipArchiveEntry zipArchiveEntry);
 }
