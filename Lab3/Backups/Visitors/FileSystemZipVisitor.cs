@@ -36,7 +36,8 @@ public class FileSystemZipVisitor : IRepositoryVisitor
     {
         ZipArchiveEntry leafEntry = _archives.Peek().CreateEntry(leaf.GetLeafId());
         using Stream leafStream = leafEntry.Open();
-        leaf.GetCurrentStream().CopyTo(leafStream);
+        using Stream currenStream = leaf.GetCurrentStream();
+        currenStream.CopyTo(leafStream);
         _zipArchivedItems.Peek().Add(new ZipArchivedFile(leaf.GetLeafId(), leafEntry));
     }
 
