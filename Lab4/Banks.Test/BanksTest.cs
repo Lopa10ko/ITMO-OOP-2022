@@ -2,8 +2,8 @@
 using System.Reflection.Metadata.Ecma335;
 using Banks.Accounts;
 using Banks.Banks;
+using Banks.Clients;
 using Banks.Entities;
-using Banks.Models;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -28,7 +28,7 @@ public class BanksTest
             .AddDepositRule(new DepositRule(100000.01m, 10))
             .Build();
         var centralBank = CentralBank.GetInstance();
-        Bank spermBank = centralBank.CreateBank("Sperm", new BankInfo(30, 10, 8.5m / daysInYear, 10000m, 50000m, 20m / daysInYear, depositRules));
+        Bank spermBank = centralBank.CreateBank("Sperm", new BankInfo(30, 10, 8.5m / daysInYear, 10000m, 50000m, 1000m, depositRules));
         Guid debitId1 = spermBank.CreateDebitAccount(client, 1000000m);
         Guid debitId2 = spermBank.CreateDebitAccount(client, 10000m);
         spermBank.CreateReplenishmentTransaction(debitId1, 50000m);
