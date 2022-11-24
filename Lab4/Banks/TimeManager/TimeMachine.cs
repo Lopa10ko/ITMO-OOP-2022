@@ -1,10 +1,10 @@
 ﻿using Banks.Banks;
-using Banks.Entities;
 
 namespace Banks.TimeManager;
+
 public class TimeMachine
 {
-    private static readonly Lazy<TimeMachine> _lazy = new Lazy<TimeMachine>(() => new TimeMachine(Guid.NewGuid()));
+    private static readonly Lazy<TimeMachine> _lazy = new (() => new TimeMachine(Guid.NewGuid()));
     private TimeMachine(Guid id)
     {
         Id = id;

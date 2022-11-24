@@ -1,6 +1,6 @@
 ﻿using Banks.Accounts;
 
-namespace Banks.Models;
+namespace Banks.Clients;
 
 public interface IClient
 {

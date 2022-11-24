@@ -1,6 +1,4 @@
-﻿using Banks.Entities;
-
-namespace Banks.Models;
+﻿namespace Banks.Entities;
 
 public class BankInfo
 {

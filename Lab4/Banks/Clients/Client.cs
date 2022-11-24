@@ -1,7 +1,6 @@
 ﻿using Banks.Accounts;
-using Banks.Banks;
 
-namespace Banks.Models;
+namespace Banks.Clients;
 
 public class Client : IEquatable<Client>, IClient
 {
