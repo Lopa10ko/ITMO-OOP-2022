@@ -35,4 +35,21 @@ public class CentralBank
     {
         bank.BankInfo = bankInfo;
     }
+
+    public void CreateTransaction(Guid actorId, Guid recipientId, decimal value)
+    {
+        Bank actorBank = _banks
+            .FirstOrDefault(bank => bank.GetAccounts.Any(account => account.Id.Equals(actorId))) ?? throw new Exception();
+        Bank recipientBank = _banks
+            .FirstOrDefault(bank => bank.GetAccounts.Any(account => account.Id.Equals(recipientId))) ?? throw new Exception();
+        if (actorBank.Equals(recipientBank))
+            actorBank.CreateTransaction(actorId, recipientId, value);
+        else
+            actorBank.CreateTransaction(actorId, GetActor(recipientId), value);
+    }
+
+    private IAccount GetActor(Guid id)
+        => _banks
+            .SelectMany(bank => bank.GetAccounts)
+            .FirstOrDefault(account => account.Id.Equals(id)) ?? throw new Exception();
 }
