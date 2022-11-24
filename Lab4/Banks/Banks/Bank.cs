@@ -1,6 +1,7 @@
-﻿using Banks.Accounts;
+﻿using System.Transactions;
+using Banks.Accounts;
+using Banks.Entities;
 using Banks.Models;
-using Banks.Services;
 using Banks.TimeManager;
 
 namespace Banks.Banks;
@@ -21,15 +22,22 @@ public class Bank : IEquatable<Bank>
 
     public string Name { get; }
     public Guid Id { get; }
-    public BankInfo BankInfo { get; set; }
+    public BankInfo BankInfo { get; private set; }
+    public IReadOnlyCollection<IAccount> GetAccounts => _accounts.AsReadOnly();
 
-    public void CreateDebitAccount(IClient client, decimal balance)
+    public Guid CreateDebitAccount(IClient client, decimal balance)
     {
-        var account = new DebitAccount(balance, BankInfo, client.IsVerified);
+        var account = new DebitAccount(new ValueAmount(balance), BankInfo, client.IsVerified);
         _accounts.Add(account);
         if (!_clients.Contains(client))
             _clients.Add(client);
         client.AddAccount(account);
+        return account.Id;
+    }
+
+    public void UpdateBankInfo(BankInfo bankInfo)
+    {
+        BankInfo = bankInfo;
     }
 
     public void Notify(DateOnly currentDate)
@@ -37,7 +45,7 @@ public class Bank : IEquatable<Bank>
         foreach (IAccount account in _accounts)
         {
             account.EvaluateCommission();
-            if (currentDate.Day.Equals(account.GetCommissionPeriod()))
+            if (currentDate.Day.Equals(ValidateCommissionDay(account.GetCommissionDay(), currentDate)))
                 account.AccrueCommission();
         }
     }

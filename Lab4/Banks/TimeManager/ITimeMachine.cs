@@ -1,4 +1,5 @@
 ﻿using Banks.Banks;
+using Banks.Entities;
 
 namespace Banks.TimeManager;
 public class TimeMachine

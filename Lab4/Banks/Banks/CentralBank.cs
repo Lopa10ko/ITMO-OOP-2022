@@ -1,4 +1,7 @@
-﻿using Banks.Models;
+﻿using System.Transactions;
+using Banks.Accounts;
+using Banks.Entities;
+using Banks.Models;
 using Banks.TimeManager;
 
 namespace Banks.Banks;
@@ -33,7 +36,7 @@ public class CentralBank
 
     public void SetBankInfo(Bank bank, BankInfo bankInfo)
     {
-        bank.BankInfo = bankInfo;
+        bank.UpdateBankInfo(bankInfo);
     }
 
     public void CreateTransaction(Guid actorId, Guid recipientId, decimal value)

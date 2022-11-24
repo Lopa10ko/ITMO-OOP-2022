@@ -29,6 +29,8 @@ public class BanksTest
             .Build();
         var centralBank = CentralBank.GetInstance();
         Bank spermBank = centralBank.CreateBank("Sperm", new BankInfo(30, 10, 8.5m / daysInYear, 10000m, 50000m, 20m / daysInYear, depositRules));
-        spermBank.CreateDebitAccount(client, 1000000m);
+        Guid debitId1 = spermBank.CreateDebitAccount(client, 1000000m);
+        Guid debitId2 = spermBank.CreateDebitAccount(client, 10000m);
+        spermBank.CreateReplenishmentTransaction(debitId1, 50000m);
     }
 }
