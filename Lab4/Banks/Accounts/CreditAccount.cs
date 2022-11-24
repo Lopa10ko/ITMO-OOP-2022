@@ -3,14 +3,14 @@ using Banks.Transactions;
 
 namespace Banks.Accounts;
 
-public class DebitAccount : IAccount
+public class CreditAccount : IAccount
 {
     private readonly List<ITransaction> _transactions;
-    private ValueAmount _moneyBank;
+    private CreditValueAmount _moneyBank;
     private ValueAmount _commission;
     private BankInfo _bankInfo;
     private bool _isVerified;
-    public DebitAccount(ValueAmount balance, BankInfo bankInfo, bool verifiedStatus)
+    public CreditAccount(CreditValueAmount balance, BankInfo bankInfo, bool verifiedStatus)
     {
         Id = Guid.NewGuid();
         _transactions = new List<ITransaction>();
@@ -48,12 +48,12 @@ public class DebitAccount : IAccount
 
     public void EvaluateCommission()
     {
-        _commission.Value += _moneyBank.Value * _bankInfo.DebitPercent.Value;
+        _commission.Value += ValidateCreditValue();
     }
 
     public void AccrueCommission()
     {
-        IncreaseMoneyValue(_commission);
+        DecreaseMoneyValue(_commission);
         _commission.Value = 0;
     }
 
@@ -67,4 +67,6 @@ public class DebitAccount : IAccount
 
     private decimal ValidateValue(decimal value)
         => !_isVerified ? Math.Min(_bankInfo.UntrustedUserWithdrawLimit.Value, value) : value;
+    private decimal ValidateCreditValue()
+        => (_moneyBank.Value < 0) ? _bankInfo.CreditCommission.Value : 0;
 }
