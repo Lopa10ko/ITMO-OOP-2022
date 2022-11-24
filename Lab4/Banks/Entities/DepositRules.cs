@@ -6,13 +6,13 @@ public class DepositRules
 
     private DepositRules(List<DepositRule> rules)
     {
-        MaximumPercent = rules.Max(rule => rule.Percent);
-        _depositRules = rules.OrderBy(rule => rule.CriticalValue).ToList();
+        MaximumPercent = new ValueAmount(rules.Max(rule => rule.Percent.Value));
+        _depositRules = rules.OrderBy(rule => rule.CriticalValue.Value).ToList();
     }
 
     public static DepositRulesBuilder Builder => new DepositRulesBuilder();
     public IReadOnlyList<DepositRule> Rules => _depositRules.AsReadOnly();
-    public decimal MaximumPercent { get; }
+    public ValueAmount MaximumPercent { get; }
 
     public class DepositRulesBuilder
     {

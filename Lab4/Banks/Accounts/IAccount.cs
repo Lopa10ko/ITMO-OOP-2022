@@ -1,15 +1,18 @@
-﻿using System.Transactions;
+﻿using Banks.Entities;
+using Transaction = System.Transactions.Transaction;
 
 namespace Banks.Accounts;
 
 public interface IAccount
 {
-    void IncreaseMoneyValue(decimal value);
-    void DecreaseMoneyValue(decimal value);
-    void RemitTo(decimal value, IAccount account);
-    int GetCommissionPeriod();
+    public Guid Id { get; }
+    void IncreaseMoneyValue(ValueAmount value);
+    void DecreaseMoneyValue(ValueAmount value);
+    void RemitTo(IAccount account, ValueAmount value);
+    int GetCommissionDay();
     void RemoveWithdrawLimit();
     void EvaluateCommission();
     void AccrueCommission();
-    IReadOnlyList<Transaction> GetTransactions();
+    void AddTransaction(ITransaction transaction);
+    IReadOnlyList<ITransaction> GetTransactions();
 }
