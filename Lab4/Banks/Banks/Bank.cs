@@ -92,7 +92,30 @@ public class Bank : IEquatable<Bank>, IObservableObject
     public override bool Equals(object? obj) => Equals(obj as Bank);
     public override int GetHashCode() => Id.GetHashCode();
     public IAccount GetActor(Guid id)
-        => _accounts.FirstOrDefault(account => account.Id.Equals(id)) ?? throw new Exception();
+        => _accounts.FirstOrDefault(account => account.Id.Equals(id))
+           ?? throw AlienEntityException.InvalidAccount(id);
+
+    public void AddObserverClient(IObserverObject client)
+    {
+        if (_observerClients.Contains(client))
+            throw ExistingStateException.ExistingClient(this);
+        _observerClients.Add(client);
+    }
+
+    public void RemoveObserverClient(IObserverObject client)
+    {
+        if (!_observerClients.Contains(client))
+            throw ExistingStateException.ExistingClient(this);
+        _observerClients.Remove(client);
+    }
+
+    public void NotifyClients()
+    {
+        foreach (IObserverObject client in _observerClients)
+        {
+            client.Update(BankInfo.ToString());
+        }
+    }
 
     private static int ValidateCommissionDay(int commissionDay, DateOnly currentDate)
     {
