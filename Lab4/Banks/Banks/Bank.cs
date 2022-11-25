@@ -3,6 +3,7 @@ using Banks.Accounts;
 using Banks.Clients;
 using Banks.Entities;
 using Banks.TimeManager;
+using Banks.Tools;
 using Banks.Transactions;
 
 namespace Banks.Banks;
@@ -96,7 +97,7 @@ public class Bank : IEquatable<Bank>, IObservableObject
     private static int ValidateCommissionDay(int commissionDay, DateOnly currentDate)
     {
         if (commissionDay > DateTime.DaysInMonth(currentDate.Year, currentDate.Month))
-            throw new Exception();
+            throw CommissionDayException.InvalidCommissionDay(commissionDay, currentDate);
         return commissionDay;
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Banks.Accounts;
+using Banks.Banks;
+using Banks.Tools;
 
 namespace Banks.Clients;
 
@@ -106,7 +108,7 @@ public class Client : IEquatable<Client>, IClient
         public Client Build()
         {
             if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(LastName) || string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(LastName))
-                throw new Exception();
+                throw ClientBuilderException.NoObligatoryProperties(Name, LastName);
             return new Client(Name, LastName, Address, Passport);
         }
 

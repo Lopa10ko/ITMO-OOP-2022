@@ -2,6 +2,7 @@
 using Banks.Accounts;
 using Banks.Entities;
 using Banks.TimeManager;
+using Banks.Tools;
 
 namespace Banks.Banks;
 
@@ -27,8 +28,8 @@ public class CentralBank
     {
         var bank = new Bank(bankName, bankInfo);
         if (_banks.Contains(bank))
-            throw new Exception("bank has been created already");
-        TimeMachine.Banks.Add(bank);
+            throw ExistingStateException.ExistingBank(bank);
+        TimeMachine.AddObserverBank(bank);
         _banks.Add(bank);
         return bank;
     }
@@ -41,9 +42,11 @@ public class CentralBank
     public void CreateTransaction(Guid actorId, Guid recipientId, decimal value)
     {
         Bank actorBank = _banks
-            .FirstOrDefault(bank => bank.GetAccounts.Any(account => account.Id.Equals(actorId))) ?? throw new Exception();
+            .FirstOrDefault(bank => bank.GetAccounts.Any(account => account.Id.Equals(actorId)))
+                         ?? throw AlienEntityException.InvalidBank(actorId);
         Bank recipientBank = _banks
-            .FirstOrDefault(bank => bank.GetAccounts.Any(account => account.Id.Equals(recipientId))) ?? throw new Exception();
+            .FirstOrDefault(bank => bank.GetAccounts.Any(account => account.Id.Equals(recipientId)))
+                             ?? throw AlienEntityException.InvalidBank(recipientId);
         if (actorBank.Equals(recipientBank))
             actorBank.CreateTransaction(actorId, recipientId, value);
         else
@@ -53,5 +56,5 @@ public class CentralBank
     private IAccount GetActor(Guid id)
         => _banks
             .SelectMany(bank => bank.GetAccounts)
-            .FirstOrDefault(account => account.Id.Equals(id)) ?? throw new Exception();
+            .FirstOrDefault(account => account.Id.Equals(id)) ?? throw AlienEntityException.InvalidAccount(id);
 }

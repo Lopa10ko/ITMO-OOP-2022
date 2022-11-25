@@ -1,4 +1,6 @@
-﻿namespace Banks.Entities;
+﻿using Banks.Tools;
+
+namespace Banks.Entities;
 
 public class BankInfo
 {
@@ -25,6 +27,6 @@ public class BankInfo
     {
         if (value > 0)
             return value;
-        throw new Exception();
+        throw ValueAmountException.InvalidValueAmount(value);
     }
 }

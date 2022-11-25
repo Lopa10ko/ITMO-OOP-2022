@@ -1,4 +1,6 @@
-﻿namespace Banks.Entities;
+﻿using Banks.Tools;
+
+namespace Banks.Entities;
 
 public interface IValueAmount
 {
@@ -22,7 +24,7 @@ public record ValueAmount : IValueAmount
     private static decimal ValidateValue(decimal value)
     {
         if (value < 0)
-            throw new Exception();
+            throw ValueAmountException.InvalidValueAmount(value);
         return value;
     }
 }
