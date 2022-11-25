@@ -26,9 +26,11 @@ public class Bank : IEquatable<Bank>
     public BankInfo BankInfo { get; private set; }
     public IReadOnlyCollection<IAccount> GetAccounts => _accounts.AsReadOnly();
 
-    public Guid CreateDebitAccount(IClient client, decimal balance)
+    public Guid CreateAccount<TAccount>(IClient client, decimal balance)
+        where TAccount : IAccount
     {
-        var account = new DebitAccount(new ValueAmount(balance), BankInfo, client.IsVerified);
+        var accountFactory = new BankAccountFactory(balance, BankInfo, client.IsVerified);
+        IAccount account = accountFactory.CreateAccount<TAccount>();
         _accounts.Add(account);
         if (!_clients.Contains(client))
             _clients.Add(client);
