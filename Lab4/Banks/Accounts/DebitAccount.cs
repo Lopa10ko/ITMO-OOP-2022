@@ -65,6 +65,9 @@ public class DebitAccount : IAccount
     public IReadOnlyList<ITransaction> GetTransactions()
         => _transactions.AsReadOnly();
 
+    public override string ToString()
+        => $"{_moneyBank.Value}";
+
     private decimal ValidateValue(decimal value)
         => !_isVerified ? Math.Min(_bankInfo.UntrustedUserWithdrawLimit.Value, value) : value;
 }
