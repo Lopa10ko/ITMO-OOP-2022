@@ -8,7 +8,7 @@ namespace Banks.Banks;
 
 public class CentralBank
 {
-    private static readonly Lazy<CentralBank> _lazy = new Lazy<CentralBank>(() => new CentralBank(Guid.NewGuid(), TimeMachine.GetInstance()));
+    private static readonly Lazy<CentralBank> _lazy = new (() => new CentralBank(Guid.NewGuid(), TimeMachine.GetInstance()));
     private readonly List<Bank> _banks;
 
     private CentralBank(Guid id, TimeMachine timeMachine)

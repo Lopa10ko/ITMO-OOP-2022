@@ -4,7 +4,7 @@ using Banks.Tools;
 
 namespace Banks.Clients;
 
-public class Client : IEquatable<Client>, IClient
+public class Client : IEquatable<Client>, IClient, IObserverObject
 {
     private readonly List<string> _clientHistory;
     private readonly List<IAccount> _accounts;
