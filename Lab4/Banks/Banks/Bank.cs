@@ -7,14 +7,16 @@ using Banks.Transactions;
 
 namespace Banks.Banks;
 
-public class Bank : IEquatable<Bank>
+public class Bank : IEquatable<Bank>, IObservableObject
 {
     private readonly List<IClient> _clients;
+    private readonly List<IObserverObject> _observerClients;
     private readonly List<IAccount> _accounts;
 
     public Bank(string name, BankInfo bankInfo)
     {
         _clients = new List<IClient>();
+        _observerClients = new List<IObserverObject>();
         _accounts = new List<IAccount>();
         Name = name;
         BankInfo = bankInfo;
@@ -41,6 +43,7 @@ public class Bank : IEquatable<Bank>
     public void UpdateBankInfo(BankInfo bankInfo)
     {
         BankInfo = bankInfo;
+        NotifyClients();
     }
 
     public void Notify(DateOnly currentDate)

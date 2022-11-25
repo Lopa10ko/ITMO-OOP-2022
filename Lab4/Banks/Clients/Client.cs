@@ -4,18 +4,20 @@ namespace Banks.Clients;
 
 public class Client : IEquatable<Client>, IClient
 {
+    private readonly List<string> _clientHistory;
     private readonly List<IAccount> _accounts;
     private readonly List<IAccount> _accountsObservable;
     private string _address = string.Empty;
     private string _passport = string.Empty;
     private Client(string name, string lastName, string address, string passport)
     {
+        _accountsObservable = new List<IAccount>();
         Name = name;
         LastName = lastName;
         Address = address;
         Passport = passport;
         Id = Guid.NewGuid();
-        _accountsObservable = new List<IAccount>();
+        _clientHistory = new List<string>();
         _accounts = new List<IAccount>();
     }
 
@@ -23,6 +25,7 @@ public class Client : IEquatable<Client>, IClient
     public Guid Id { get; }
     public string Name { get; }
     public string LastName { get; }
+    public IReadOnlyList<string> GetClientHistory => _clientHistory.AsReadOnly();
     public bool IsVerified => !(string.IsNullOrEmpty(Passport) || string.IsNullOrEmpty(Address));
 
     public string Address
@@ -59,9 +62,24 @@ public class Client : IEquatable<Client>, IClient
     public override bool Equals(object? obj) => Equals(obj as Client);
 
     public override int GetHashCode() => Id.GetHashCode();
+    public void Update(string logMessage)
+    {
+        _clientHistory.Add(logMessage);
+    }
+
+    public void SubscribeToBank(Bank bank)
+    {
+        bank.AddObserverClient(this);
+    }
+
+    public void UnsubscribeFromBank(Bank bank)
+    {
+        bank.RemoveObserverClient(this);
+    }
 
     private void Notify()
     {
+        if (_accountsObservable.Count == 0) return;
         foreach (IAccount account in _accountsObservable)
         {
             account.RemoveWithdrawLimit();

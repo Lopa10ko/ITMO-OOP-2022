@@ -2,7 +2,7 @@
 
 namespace Banks.Clients;
 
-public interface IClient
+public interface IClient : IObserverObject
 {
     bool IsVerified { get; }
     Guid Id { get; }
