@@ -53,6 +53,20 @@ public class CentralBank
             actorBank.CreateTransaction(actorId, GetActor(recipientId), value);
     }
 
+    public void CancelTransaction(Guid actorId, Guid recipientId, decimal value)
+    {
+        Bank actorBank = _banks
+            .FirstOrDefault(bank => bank.GetAccounts.Any(account => account.Id.Equals(actorId)))
+                         ?? throw AlienEntityException.InvalidBank(actorId);
+        Bank recipientBank = _banks
+            .FirstOrDefault(bank => bank.GetAccounts.Any(account => account.Id.Equals(recipientId)))
+                             ?? throw AlienEntityException.InvalidBank(recipientId);
+        if (actorBank.Equals(recipientBank))
+            actorBank.CancelTransaction(actorId, recipientId, value);
+        else
+            actorBank.CancelTransaction(actorId, GetActor(recipientId), value);
+    }
+
     private IAccount GetActor(Guid id)
         => _banks
             .SelectMany(bank => bank.GetAccounts)

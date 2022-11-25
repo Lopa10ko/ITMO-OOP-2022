@@ -74,6 +74,23 @@ public class Bank : IEquatable<Bank>, IObservableObject
         recipientAccount.AddTransaction(transaction);
     }
 
+    public void CancelTransaction(Guid actorId, Guid recipientId, decimal value)
+    {
+        IAccount actorAccount = GetActor(actorId);
+        IAccount recipientAccount = GetActor(recipientId);
+        var transaction = new CancellationTransaction(actorAccount, recipientAccount, new ValueAmount(value));
+        actorAccount.AddTransaction(transaction);
+        recipientAccount.AddTransaction(transaction);
+    }
+
+    public void CancelTransaction(Guid actorId, IAccount recipientAccount, decimal value)
+    {
+        IAccount actorAccount = GetActor(actorId);
+        var transaction = new CancellationTransaction(actorAccount, recipientAccount, new ValueAmount(value));
+        actorAccount.AddTransaction(transaction);
+        recipientAccount.AddTransaction(transaction);
+    }
+
     public void CreateWithdrawTransaction(Guid actorId, decimal value)
     {
         IAccount actorAccount = GetActor(actorId);
