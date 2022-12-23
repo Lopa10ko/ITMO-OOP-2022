@@ -24,4 +24,10 @@ internal class MessageService : IMessage
         await _context.SaveChangesAsync(cancellationToken);
         return message.AsDto();
     }
+
+    public async Task<ICollection<MessageDto>> GetAllMessageGuids(Guid employeeId, CancellationToken cancellationToken)
+    {
+        var employee = await _context.Employees.GetEntityAsync(employeeId, cancellationToken);
+        return employee.Messages.Select(message => message.AsDto()).ToArray();
+    }
 }

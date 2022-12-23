@@ -51,6 +51,11 @@ internal class EmployeeService : IEmployee
                $"Total messages: {employee.LedEmployees.Sum(e => e.Messages.Count(m => IsInRange(m.HandledTime, spanStart, spanEnd)))}";
     }
 
+    public Task<ICollection<KeyValuePair<string, Guid>>> GetAllEmployeeGuids()
+        => Task.FromResult<ICollection<KeyValuePair<string, Guid>>>(_context.Employees
+            .Select(employee => KeyValuePair.Create<string, Guid>(employee.Name, employee.Id))
+            .ToList());
+
     private static bool IsInRange(DateTime observedTime, DateTime spanStart, DateTime spanEnd)
         => observedTime >= spanStart && observedTime <= spanEnd;
 }
