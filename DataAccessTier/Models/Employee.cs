@@ -1,6 +1,6 @@
 ﻿namespace DataAccessTier.Models;
 
-public class Employee
+public class Employee : IEquatable<Employee>
 {
     public Employee(Guid id, string name)
     {
@@ -19,4 +19,8 @@ public class Employee
 
     // TODO: fix timing issue to form proper report
     public virtual ICollection<Message> Messages { get; set; }
+
+    public bool Equals(Employee? other) => other is not null && Id.Equals(other.Id);
+    public override bool Equals(object? obj) => Equals(obj as Employee);
+    public override int GetHashCode() => Id.GetHashCode();
 }

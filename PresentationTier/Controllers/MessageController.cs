@@ -25,7 +25,7 @@ public class MessageController : ControllerBase
         return Ok(message);
     }
 
-    [HttpGet(Name = "GetAllMessageGuids")]
+    [HttpGet("{employeeId:guid}/getAllMessages")]
     public async Task<IEnumerable<MessageInstance>> GetAsync(Guid employeeId)
     {
         var messageDtos = await _messageService.GetAllMessageGuids(employeeId, CancellationToken);

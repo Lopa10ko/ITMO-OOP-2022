@@ -42,20 +42,8 @@ internal class EmployeeService : IEmployee
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<string> GetReportAsync(Guid employeeId, DateTime spanStart, DateTime spanEnd, CancellationToken cancellationToken)
-    {
-        var employee = await _context.Employees.GetEntityAsync(employeeId, cancellationToken);
-        return $"Report (from {spanStart} to {spanEnd}) for {employee.Id}\n" +
-               $"Quantity of subordinate employees: {employee.LedEmployees.Count}\n" +
-               $"Total handled messages: {employee.LedEmployees.Sum(e => e.Messages.Count(m => IsInRange(m.HandledTime, spanStart, spanEnd) && m.State.Equals(MessageState.Checked)))}\n" +
-               $"Total messages: {employee.LedEmployees.Sum(e => e.Messages.Count(m => IsInRange(m.HandledTime, spanStart, spanEnd)))}";
-    }
-
     public Task<ICollection<KeyValuePair<string, Guid>>> GetAllEmployeeGuids()
         => Task.FromResult<ICollection<KeyValuePair<string, Guid>>>(_context.Employees
             .Select(employee => KeyValuePair.Create<string, Guid>(employee.Name, employee.Id))
             .ToList());
-
-    private static bool IsInRange(DateTime observedTime, DateTime spanStart, DateTime spanEnd)
-        => observedTime >= spanStart && observedTime <= spanEnd;
 }

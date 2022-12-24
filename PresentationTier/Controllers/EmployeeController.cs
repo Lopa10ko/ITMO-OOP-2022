@@ -39,15 +39,6 @@ public class EmployeeController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("{bossId:guid}/formActivityReport")]
-    public async Task<ActionResult<string>> AddSubordinateEmployeeAsync(Guid bossId)
-    {
-        DateTime spanStart = DateTime.MinValue;
-        DateTime spanEnd = DateTime.Now;
-        string report = await _employeeService.GetReportAsync(bossId, spanStart, spanEnd, CancellationToken);
-        return Ok(report);
-    }
-
     [HttpGet(Name = "GetAllEmployeeGuids")]
     public IEnumerable<EmployeeInstance> Get()
         => _employeeService
